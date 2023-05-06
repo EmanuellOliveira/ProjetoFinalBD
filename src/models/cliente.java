@@ -1,8 +1,9 @@
 package models;
 
-public class cliente {
+public class Cliente {
     private int idCliente;
     private String nomeCliente;
+    private String email;
     private String empresa;
     private String  teleCel;
     
@@ -17,6 +18,12 @@ public class cliente {
     }
     public void setNomeCliente(String nome) {
         this.nomeCliente = nome;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getEmpresa() {
         return empresa;

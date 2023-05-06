@@ -1,6 +1,6 @@
 package models;
 
-public class membros_equipe {
+public class Membros_equipe {
     private int idMembros;
     private String nomeMembros;
     private String email;

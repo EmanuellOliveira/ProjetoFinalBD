@@ -1,6 +1,6 @@
 package models;
 
-public class etapa {
+public class Etapa {
     private int idEtapa;
     private String nomeEtapa;
     private String descricao;

@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class etapa_projeto {
+public class Etapa_projeto {
     private int idEtapaProjeto;
     private int idProjeto;
     private int idEtapa;

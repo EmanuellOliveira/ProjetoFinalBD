@@ -1,6 +1,6 @@
 package models;
 
-public class equipe {
+public class Equipe {
     private int idEquipe;
     private String nomeEquipe;
     private String descricao;

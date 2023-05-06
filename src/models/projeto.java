@@ -2,7 +2,7 @@ package models;
 
 import java.util.Date;
 
-public class projeto {
+public class Projeto {
     private int idProjeto;
     private String nomeProjeto;
     private String descricao;
