@@ -60,6 +60,12 @@ public class Projeto {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+    @Override
+    public String toString() {
+        return "\n******Projetos****** \nIDProjeto: " + idProjeto + "\nNome do Projeto: " + nomeProjeto + "\nDescrição: " + descricao
+                + "\nData inicial: " + dataInicio + "\nData Final: " + dataFinal + "\nOrçamento: " + orcamento + "\nStatus: "
+                + status + "\nCliente: " + idCliente;
+    }
 
     
 

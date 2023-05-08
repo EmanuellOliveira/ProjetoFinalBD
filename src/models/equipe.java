@@ -23,6 +23,8 @@ public class Equipe {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-
+    @Override
+    public String toString() {
+        return "\n******Equipes****** \nIDEquipe: " + idEquipe + "\nNome da Equipe: " + nomeEquipe + "\nDescrição: " + descricao;
+    }
 }

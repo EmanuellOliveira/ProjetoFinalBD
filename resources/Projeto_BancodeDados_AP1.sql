@@ -40,7 +40,7 @@ VALUES
     ("Etapa de Implantação", "O software é preparado para ser implantado no ambiente de produção, incluindo a instalação, configuração e treinamento do usuário final.", 5),
     ("Etapa de Manutenção", "Depois que o software é implantado, ele requer manutenção contínua para corrigir bugs, adicionar novos recursos e atualizar a funcionalidade.", 6);
 
-CREATE TABLE projetos(
+CREATE TABLE projeto(
 	ID_projeto INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     descricao TEXT NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE projetos(
     );
 
     
-CREATE TABLE etapas_projeto(
+CREATE TABLE etapa_projeto(
 	ID_etapasprojeto INT PRIMARY KEY AUTO_INCREMENT,
 	ID_projeto INT NOT NULL,
     ID_etapa INT NOT NULL,

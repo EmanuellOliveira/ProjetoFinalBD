@@ -1,31 +1,70 @@
 package aplicacao;
 
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
 import DAO.ClienteDAO;
+import DAO.ProjetoDAO;
 import DAO.EquipeDAO;
 import models.Cliente;
+import models.Projeto;
 import models.Equipe;
 
 public class Main {
     
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) throws ParseException {
+
+        //CLIENTE
+
         ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente novoCliente = new Cliente();
 
-        Cliente cliente = new Cliente();
-        cliente.setNomeCliente("dddddd");
-        cliente.setEmpresa("Seila");
-        cliente.setEmail("123123@rfasdr");
-        cliente.setTeleCel("324234524524");
 
-        clienteDAO.save(cliente);
+        novoCliente.setNomeCliente("Antonio");
+        novoCliente.setEmpresa("teste sa");
+        novoCliente.setEmail("tes@tes");
+        novoCliente.setTeleCel("234234234");
+
+        clienteDAO.save(novoCliente);
+        
+        // PROJETO
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        Projeto novoProjeto = new Projeto();
+
+        novoProjeto.setNomeProjeto("testenomeprojeto");
+        novoProjeto.setDescricao("descricaoteste");
+        novoProjeto.setDataInicio(new Date());
+        novoProjeto.setDataFinal(new Date());
+        novoProjeto.setOrcamento(456.76f);
+        novoProjeto.setStatus("Iniciado");
+        novoProjeto.setIdCliente(1);
+
+        projetoDAO.save(novoProjeto);
+
+        //Visualizar Lista de Projetos
+        List<Projeto> projetos = projetoDAO.getProjeto();
+
+        for (Projeto projeto : projetos){
+            System.out.println(projeto);
+        }
+
+        //Visualizar Lisata de Cllientes
+
+        List<Cliente> clientes = clienteDAO.getCliente();
+
+        for (Cliente cliente : clientes){
+            System.out.println(cliente);
+        }
+
+        //Visualizar Lisata de Equipe
 
         EquipeDAO equipeDAO = new EquipeDAO();
 
-        Equipe equipe = new Equipe();
-        equipe.setNomeEquipe("Teste1nome");
-        equipe.setDescricao("textotextotexto");
+        List<Equipe> equipes = equipeDAO.getEquipe();
 
-        equipeDAO.save(equipe);
-
+        for (Equipe equipe : equipes){
+            System.out.println(equipe);
+        }
     }
 }

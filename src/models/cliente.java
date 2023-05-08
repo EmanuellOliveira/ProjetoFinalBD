@@ -37,6 +37,13 @@ public class Cliente {
     public void setTeleCel(String tel_cel) {
         this.teleCel = tel_cel;
     }
-
+    public void add(Cliente cliente) {
+    }
+    @Override
+    
+    public String toString() {
+        return "\n******Clientes****** \nIDCliente: " + idCliente + "\nNome do cliente: " + nomeCliente + "\nE-mail: " + email + "\nEmpresa: "
+                + empresa + "\nTelefone/celular: " + teleCel;
+    }
     
 }
