@@ -1,9 +1,68 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src",
+        "lib"
+    ],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "resources\\mysql-connector-java-8.0.22.jar",
-        "c:\\Program Files (x86)\\MySQL\\Connector J 8.0\\mysql-connector-j-8.0.33.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "resources\\mysql-connector-java-8.0.22.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.base.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.controls.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.fxml.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.graphics.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.media.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.swing.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx.web.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx-swt.jar"
+        ],
+        "exclude": [
+            "resources/mysql-connector-java-8.0.22.jar",
+            "lib/javafx-swt.jar",
+            "lib/javafx.base.jar",
+            "lib/javafx.controls.jar",
+            "lib/javafx.fxml.jar",
+            "lib/javafx.graphics.jar",
+            "lib/javafx.media.jar",
+            "lib/javafx.swing.jar",
+            "lib/javafx.web.jar",
+            "d:\\Programacao\\Java\\JavaLibs\\javafx-sdk-20\\lib\\javafx-swt.jar",
+            "lib/jre1.8.0_351/lib/security/policy/limited/US_export_policy.jar",
+            "lib/jre1.8.0_351/lib/security/policy/unlimited/US_export_policy.jar",
+            "lib/jre1.8.0_351/lib/ext/access-bridge-64.jar",
+            "lib/jre1.8.0_351/lib/charsets.jar",
+            "lib/jre1.8.0_351/lib/ext/cldrdata.jar",
+            "lib/javafx-sdk-20/lib/javafx.swing.jar",
+            "lib/jre1.8.0_351/lib/jce.jar",
+            "lib/jre1.8.0_351/lib/jfr.jar",
+            "lib/jre1.8.0_351/lib/ext/jfxrt.jar",
+            "lib/jre1.8.0_351/lib/jfxswt.jar",
+            "lib/javafx-sdk-20/lib/javafx.web.jar",
+            "lib/javafx-sdk-20/lib/javafx.media.jar",
+            "lib/javafx-sdk-20/lib/javafx.graphics.jar",
+            "lib/javafx-sdk-20/lib/javafx.fxml.jar",
+            "lib/jre1.8.0_351/lib/jsse.jar",
+            "lib/jre1.8.0_351/lib/management-agent.jar",
+            "lib/jre1.8.0_351/lib/ext/zipfs.jar",
+            "lib/jre1.8.0_351/lib/ext/sunmscapi.jar",
+            "lib/jre1.8.0_351/lib/ext/sunpkcs11.jar",
+            "lib/jre1.8.0_351/lib/ext/sunjce_provider.jar",
+            "lib/jre1.8.0_351/lib/ext/sunec.jar",
+            "lib/jre1.8.0_351/lib/rt.jar",
+            "lib/jre1.8.0_351/lib/resources.jar",
+            "lib/jre1.8.0_351/lib/plugin.jar",
+            "lib/jre1.8.0_351/lib/ext/nashorn.jar",
+            "lib/jre1.8.0_351/lib/ext/localedata.jar",
+            "lib/jre1.8.0_351/lib/security/policy/limited/local_policy.jar",
+            "lib/jre1.8.0_351/lib/security/policy/unlimited/local_policy.jar",
+            "lib/jre1.8.0_351/lib/javaws.jar",
+            "lib/javafx-sdk-20/lib/javafx.controls.jar",
+            "lib/javafx-sdk-20/lib/javafx.base.jar",
+            "lib/javafx-sdk-20/lib/javafx-swt.jar",
+            "lib/jre1.8.0_351/lib/ext/jaccess.jar",
+            "lib/jre1.8.0_351/lib/ext/dnsns.jar",
+            "lib/jre1.8.0_351/lib/deploy.jar"
+        ]
+    }
 }

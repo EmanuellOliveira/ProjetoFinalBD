@@ -13,7 +13,7 @@ public class Etapa_projetoDAO {
     
     public void save(Etapa_projeto etapaProjeto) {
         
-        String sql = "INSERT INTO etapas_projeto(ID_projeto, ID_etapa, status_etapa, data_inicio, data_final) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO etapa_projeto(ID_projeto, ID_etapa, status_etapa, data_inicio, data_final) VALUES (?, ?, ?, ?, ?);";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -83,5 +83,36 @@ public class Etapa_projetoDAO {
                 }
             }
         return etapa_projeto;
+    }
+    public void deleteByID(int id){
+        
+        String sql = "DELETE FROM etapa_projeto WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            pstm.execute();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
+    }
+
 }

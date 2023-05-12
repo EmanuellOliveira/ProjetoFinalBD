@@ -91,4 +91,35 @@ public class EquipeDAO {
         return equipe;
         
     }
+
+    public void deleteByID(int id){
+        
+        String sql = "DELETE FROM equipe WHERE id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            pstm.execute();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 }
