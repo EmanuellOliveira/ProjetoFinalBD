@@ -84,6 +84,7 @@ public class Etapa_projetoDAO {
             }
         return etapa_projeto;
     }
+    
     public void deleteByID(int id){
         
         String sql = "DELETE FROM etapa_projeto WHERE id = ?";

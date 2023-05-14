@@ -102,6 +102,43 @@ public class ProjetoDAO {
         
     }
 
+    public void update(Projeto projeto){
+
+        String sql = "UPDATE projeto SET nome = ?, descricao = ?, data_inicio = ?, data_final = ?, orcamento = ?, status = ?" + "WHERE ID_projeto = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try{
+            conn = Conexao.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, projeto.getNomeProjeto());
+            pstm.setString(2, projeto.getDescricao());
+            pstm.setDate(3, (Date) projeto.getDataInicio());
+            pstm.setDate(4, (Date) projeto.getDataFinal());
+            pstm.setFloat(5, projeto.getOrcamento());
+            pstm.setString(6, projeto.getStatus());
+
+            pstm.execute();
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void deleteByID(int id){
         
         String sql = "DELETE FROM proejto WHERE id = ?";

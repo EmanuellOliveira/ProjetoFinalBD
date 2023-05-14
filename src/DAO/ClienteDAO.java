@@ -96,6 +96,40 @@ public class ClienteDAO {
         return cliente;   
     }
 
+    public void update(Cliente cliente){
+
+        String sql = "UPDATE cliente SET nome = ?, empresa = ?, email = ?, telefone_celular = ?" + "WHERE ID_cliente = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try{
+            conn = Conexao.createConnectionToMySQL();
+
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, cliente.getNomeCliente());
+            pstm.setString(2, cliente.getEmpresa());
+            pstm.setString(3, cliente.getEmail());
+            pstm.setString(4, cliente.getTeleCel());
+            pstm.execute();
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally{
+            try{
+                if(pstm!=null){
+                    pstm.close();
+                }
+
+                if(conn!=null){
+                    conn.close();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
     public void deleteByID(int id){
         
         String sql = "DELETE FROM cliente WHERE id = ?";
