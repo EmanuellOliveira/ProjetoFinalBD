@@ -5,7 +5,8 @@ public class Cliente {
     private String nomeCliente;
     private String email;
     private String empresa;
-    private String  teleCel;
+    private String teleCel;
+    
     
     public int getIdCliente() {
         return idCliente;
