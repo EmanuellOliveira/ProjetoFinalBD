@@ -6,6 +6,14 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LayoutLogin",
+            "request": "launch",
+            "mainClass": "login.LayoutLogin",
+            "projectName": "IntegracaoBDJAVA_ec970937",
+            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
             "name": "App",
             "request": "launch",
             "mainClass": "App",
