@@ -21,8 +21,8 @@ public class ClienteDAO {
             conn = Conexao.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, cliente.getNomeCliente());
-            pstm.setString(2, cliente.getEmail());
-            pstm.setString(3, cliente.getEmpresa());
+            pstm.setString(2, cliente.getEmpresa());
+            pstm.setString(3, cliente.getEmail());
             pstm.setString(4, cliente.getTeleCel());
 
             pstm.execute();
@@ -44,7 +44,7 @@ public class ClienteDAO {
         
     }
 
-    public List<Cliente> getCliente(){
+    public List<Cliente> getAll(){
 
 
         
@@ -63,7 +63,7 @@ public class ClienteDAO {
 
             while (rset.next()) {
                 
-                Cliente novoCliente = new Cliente();
+                Cliente novoCliente = new Cliente("", "", "", "");
 
                 novoCliente.setIdCliente(rset.getInt("ID_cliente"));
                 novoCliente.setNomeCliente(rset.getString("nome"));
@@ -132,7 +132,7 @@ public class ClienteDAO {
 
     public void deleteByID(int id){
         
-        String sql = "DELETE FROM cliente WHERE id = ?";
+        String sql = "DELETE FROM cliente WHERE ID_cliente = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -160,4 +160,5 @@ public class ClienteDAO {
             }
         }
     }
+
 }

@@ -1,73 +1,104 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Projeto {
     private int idProjeto;
     private String nomeProjeto;
     private String descricao;
-    private Date dataInicio;
-    private Date dataFinal;
+    private LocalDate dataInicio;
+    private LocalDate dataFinal;
     private float orcamento;
     private String status;
     private int idCliente;
-    
+
+    public Projeto() {
+    }
+
+    public Projeto(String nomeProjeto, String descricao, LocalDate dataInicio, LocalDate dataFinal, float orcamento, String status, int idCliente) {
+        this.nomeProjeto = nomeProjeto;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFinal = dataFinal;
+        this.orcamento = orcamento;
+        this.status = status;
+        this.idCliente = idCliente;
+    }
+
     public int getIdProjeto() {
         return idProjeto;
     }
+
     public void setIdProjeto(int idProjeto) {
         this.idProjeto = idProjeto;
     }
+
     public String getNomeProjeto() {
         return nomeProjeto;
     }
+
     public void setNomeProjeto(String nomeProjeto) {
         this.nomeProjeto = nomeProjeto;
     }
+
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    public Date getDataInicio() {
+
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
-    public void setDataInicio(Date dataInicio) {
+
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
-    public Date getDataFinal() {
+
+    public LocalDate getDataFinal() {
         return dataFinal;
     }
-    public void setDataFinal(Date dataFinal) {
+
+    public void setDataFinal(LocalDate dataFinal) {
         this.dataFinal = dataFinal;
     }
+
     public float getOrcamento() {
         return orcamento;
     }
+
     public void setOrcamento(float orcamento) {
         this.orcamento = orcamento;
     }
+
     public String getStatus() {
         return status;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
     public int getIdCliente() {
         return idCliente;
     }
+
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+
     @Override
     public String toString() {
-        return "\n******Projetos****** \nIDProjeto: " + idProjeto + "\nNome do Projeto: " + nomeProjeto + "\nDescrição: " + descricao
-                + "\nData inicial: " + dataInicio + "\nData Final: " + dataFinal + "\nOrçamento: " + orcamento + "\nStatus: "
-                + status + "\nCliente: " + idCliente;
+        return "****** Projeto ******" +
+                "\nID do Projeto: " + idProjeto +
+                "\nNome do Projeto: " + nomeProjeto +
+                "\nDescrição: " + descricao +
+                "\nData de Início: " + dataInicio +
+                "\nData Final: " + dataFinal +
+                "\nOrçamento: " + orcamento +
+                "\nStatus: " + status +
+                "\nID do Cliente: " + idCliente;
     }
-
-    
-
-
 }

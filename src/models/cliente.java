@@ -3,11 +3,17 @@ package models;
 public class Cliente {
     private int idCliente;
     private String nomeCliente;
-    private String email;
     private String empresa;
+    private String email;
     private String teleCel;
     
     
+    public Cliente(String nome, String empresa, String email, String contato) {
+        this.nomeCliente = nome;
+        this.empresa = empresa;
+        this.email = email;
+        this.teleCel = contato;
+    }
     public int getIdCliente() {
         return idCliente;
     }
@@ -38,13 +44,6 @@ public class Cliente {
     public void setTeleCel(String tel_cel) {
         this.teleCel = tel_cel;
     }
-    public void add(Cliente cliente) {
-    }
-    @Override
-    
-    public String toString() {
-        return "\n******Clientes****** \nIDCliente: " + idCliente + "\nNome do cliente: " + nomeCliente + "\nE-mail: " + email + "\nEmpresa: "
-                + empresa + "\nTelefone/celular: " + teleCel;
-    }
+
     
 }

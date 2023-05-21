@@ -25,115 +25,115 @@ public class ProjetoDAO {
            
             pstm.setString(1, projeto.getNomeProjeto());
             pstm.setString(2, projeto.getDescricao());
-            pstm.setDate(3, new Date(projeto.getDataInicio().getTime()));
-            pstm.setDate(4, new Date(projeto.getDataFinal().getTime()));
+            pstm.setDate(3, Date.valueOf(projeto.getDataInicio()));
+            pstm.setDate(4, Date.valueOf(projeto.getDataFinal()));
             pstm.setFloat(5, projeto.getOrcamento());
             pstm.setString(6, projeto.getStatus());
             pstm.setInt(7, projeto.getIdCliente());
 
             pstm.execute();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            try{
-                if(pstm!=null){
+        } finally {
+            try {
+                if (pstm != null) {
                     pstm.close();
                 }
 
-                if(conn!=null){
+                if (conn != null) {
                     conn.close();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public List<Projeto> getProjeto(){
+    public List<Projeto> getAll(){
 
         String sql = "SELECT * FROM projeto;";
 
-        List<Projeto> projeto = new ArrayList<Projeto>();
+        List<Projeto> projetos = new ArrayList<>();
 
         Connection conn = null;
         PreparedStatement pstm = null;
-
         ResultSet rset = null;
 
-        try{
+        try {
             conn = Conexao.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql);
             rset = pstm.executeQuery();
 
             while (rset.next()){
                 Projeto novoProjeto = new Projeto();
-                
+
                 novoProjeto.setIdProjeto(rset.getInt("ID_projeto"));
                 novoProjeto.setNomeProjeto(rset.getString("nome"));
                 novoProjeto.setDescricao(rset.getString("descricao"));
-                novoProjeto.setDataInicio(rset.getDate("data_inicio"));
-                novoProjeto.setDataFinal(rset.getDate("data_final"));
+                novoProjeto.setDataInicio(rset.getDate("data_inicio").toLocalDate());
+                novoProjeto.setDataFinal(rset.getDate("data_final").toLocalDate());
                 novoProjeto.setOrcamento(rset.getFloat("orcamento"));
                 novoProjeto.setStatus(rset.getString("status"));
                 novoProjeto.setIdCliente(rset.getInt("ID_cliente"));
 
-                projeto.add(novoProjeto);
+                projetos.add(novoProjeto);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            try{
-                if(rset!=null){
-                rset.close();
-            }
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
 
-            if(pstm!=null){
-                pstm.close();
-            }
+                if (pstm != null) {
+                    pstm.close();
+                }
 
-            if(conn!=null){
-                conn.close();
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
-        }   
-    }
-        return projeto;
+        }
         
+        return projetos;
     }
 
     public void update(Projeto projeto){
 
-        String sql = "UPDATE projeto SET nome = ?, descricao = ?, data_inicio = ?, data_final = ?, orcamento = ?, status = ?" + "WHERE ID_projeto = ?";
+        String sql = "UPDATE projeto SET nome = ?, descricao = ?, data_inicio = ?, data_final = ?, orcamento = ?, status = ? WHERE ID_projeto = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
 
-        try{
+        try {
             conn = Conexao.createConnectionToMySQL();
 
             pstm = conn.prepareStatement(sql);
             pstm.setString(1, projeto.getNomeProjeto());
             pstm.setString(2, projeto.getDescricao());
-            pstm.setDate(3, (Date) projeto.getDataInicio());
-            pstm.setDate(4, (Date) projeto.getDataFinal());
+            pstm.setDate(3, Date.valueOf(projeto.getDataInicio()));
+            pstm.setDate(4, Date.valueOf(projeto.getDataFinal()));
             pstm.setFloat(5, projeto.getOrcamento());
             pstm.setString(6, projeto.getStatus());
+            pstm.setInt(7, projeto.getIdProjeto());
 
             pstm.execute();
-            
-        }catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            try{
-                if(pstm!=null){
+        } finally {
+            try {
+                if (pstm != null) {
                     pstm.close();
                 }
 
-                if(conn!=null){
+                if (conn != null) {
                     conn.close();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -141,7 +141,7 @@ public class ProjetoDAO {
 
     public void deleteByID(int id){
         
-        String sql = "DELETE FROM proejto WHERE id = ?";
+        String sql = "DELETE FROM projeto WHERE ID_projeto = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -153,20 +153,21 @@ public class ProjetoDAO {
             pstm.setInt(1, id);
             pstm.execute();
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            try{
-                if(pstm!=null){
+        } finally {
+            try {
+                if (pstm != null) {
                     pstm.close();
                 }
 
-                if(conn!=null){
+                if (conn != null) {
                     conn.close();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
+
 }

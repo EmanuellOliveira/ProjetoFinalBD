@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitMenuButton?>
 <?import javafx.scene.control.SplitPane?>
@@ -42,6 +43,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
@@ -58,6 +61,11 @@
                            <items>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
+                                    <ImageView fitHeight="665.0" fitWidth="728.0" layoutX="6.0" layoutY="-142.0" opacity="0.15" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/G.png" />
+                                       </image>
+                                    </ImageView>
                                     <Button fx:id="addCliente" layoutX="23.0" layoutY="198.0" mnemonicParsing="false" onAction="#adicionarCliente" text="Adicionar" />
                                     <Button fx:id="altCliente" layoutX="99.0" layoutY="198.0" mnemonicParsing="false" onAction="#alterarCliente" text="Alterar" />
                                     <Button fx:id="delCliente" layoutX="163.0" layoutY="198.0" mnemonicParsing="false" onAction="#deletarCliente" prefHeight="25.0" prefWidth="65.0" text="Deletar" />
@@ -66,7 +74,7 @@
                                     <Text layoutX="23.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
                                     <TextField fx:id="empresaCliente" layoutX="24.0" layoutY="77.0" />
                                     <Text layoutX="24.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empresa" />
-                                    <TextField fx:id="contatoClliente" layoutX="23.0" layoutY="165.0" />
+                                    <TextField fx:id="contatoCliente" layoutX="23.0" layoutY="165.0" />
                                     <Text layoutX="23.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contato" />
                                     <Text layoutX="298.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_cliente" />
                                     <TextField fx:id="idCliente" layoutX="298.0" layoutY="98.0" prefHeight="25.0" prefWidth="50.0" />
@@ -77,7 +85,7 @@
                               </AnchorPane>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TableView layoutY="-2.0" prefHeight="182.0" prefWidth="665.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tableViewCliente" layoutY="-2.0" prefHeight="182.0" prefWidth="665.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                                        <columns>
                                           <TableColumn fx:id="colunaIDCliente" prefWidth="75.0" text="ID" />
                                           <TableColumn fx:id="colunaNomeCliente" prefWidth="92.0" text="Nome" />
@@ -102,6 +110,11 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
+                                    <ImageView fitHeight="654.0" fitWidth="759.0" layoutX="5.0" layoutY="-152.0" opacity="0.14" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../resources/G.png" />
+                                       </image>
+                                    </ImageView>
                                     <TextArea fx:id="descProjeto" layoutX="340.0" layoutY="28.0" prefHeight="109.0" prefWidth="200.0" />
                                     <Button fx:id="addProjeto" layoutX="220.0" layoutY="21.0" mnemonicParsing="false" onAction="#adicionarProjeto" text="Adicionar" />
                                     <Button fx:id="altProjeto" layoutX="227.0" layoutY="63.0" mnemonicParsing="false" onAction="#alterarProjeto" text="Alterar" />
@@ -111,16 +124,13 @@
                                     <Text layoutX="573.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_projeto" />
                                     <TextField fx:id="idProjeto" layoutX="574.0" layoutY="109.0" prefHeight="25.0" prefWidth="50.0" />
                                     <Button fx:id="pesqProjeto" layoutX="565.0" layoutY="139.0" mnemonicParsing="false" onAction="#pesquisarProjeto" text="Pesquisar" />
-                                    <TextField fx:id="nomeProjeto" layoutX="15.0" layoutY="21.0" prefHeight="25.0" prefWidth="155.0" />
-                                    <TextField fx:id="dInicialProjeto" accessibleRole="DATE_PICKER" layoutX="15.0" layoutY="72.0" prefHeight="25.0" prefWidth="71.0" />
-                                    <TextField fx:id="orcamentoProjeto" layoutX="15.0" layoutY="116.0" prefHeight="25.0" prefWidth="155.0" />
-                                    <TextField fx:id="dFinalProjeto" accessibleRole="DATE_PICKER" layoutX="99.0" layoutY="72.0" prefHeight="25.0" prefWidth="71.0" />
-                                    <Text layoutX="15.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
-                                    <Text layoutX="15.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Inicial" />
-                                    <Text layoutX="99.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Final" />
-                                    <Text layoutX="15.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orçamento" />
-                                    <Text layoutX="18.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
-                                    <SplitMenuButton fx:id="statusProjeto" layoutX="18.0" layoutY="174.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="-">
+                                    <TextField fx:id="nomeProjeto" layoutX="18.0" layoutY="21.0" prefHeight="25.0" prefWidth="155.0" />
+                                    <TextField fx:id="orcamentoProjeto" layoutX="18.0" layoutY="148.0" prefHeight="25.0" prefWidth="155.0" />
+                                    <Text layoutX="18.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
+                                    <Text layoutX="18.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Inicial" />
+                                    <Text layoutX="18.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orçamento" />
+                                    <Text layoutX="18.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status" />
+                                    <SplitMenuButton fx:id="statusProjeto" layoutX="18.0" layoutY="193.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="-">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
                                         <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -133,11 +143,14 @@
                                       </items>
                                     </SplitMenuButton>
                                     <Text layoutX="340.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente" />
+                                    <DatePicker fx:id="dInicialProjeto" layoutX="18.0" layoutY="63.0" />
+                                    <Text layoutX="18.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Final" />
+                                    <DatePicker fx:id="dFinalProjeto" layoutX="18.0" layoutY="104.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="152.0" prefWidth="600.0">
                                  <children>
-                                    <TableView layoutY="-2.0" prefHeight="192.0" prefWidth="665.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tableViewProjeto" layoutY="-2.0" prefHeight="192.0" prefWidth="665.0" AnchorPane.bottomAnchor="-3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                                       <columns>
                                         <TableColumn fx:id="colunaIDProjeto" prefWidth="32.0" text="ID" />
                                         <TableColumn fx:id="colunaNomeProjeto" prefWidth="99.0" text="Nome" />

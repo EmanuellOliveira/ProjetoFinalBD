@@ -41,13 +41,15 @@ public void handleBotaoLogar(){
 }
 
 public void handleConectarServidor() throws ClassNotFoundException, SQLException{
+    try{
     Connection conn = Conexao.createConnectionToMySQL();
 
     if(conn!=null){
         exibirMensgemConexaoOK();
-    }else{
-        exibirMensagemConexaoFalha();
     }
+}catch (SQLException e){
+    exibirMensagemConexaoFalha();
+}
 }
 
 
