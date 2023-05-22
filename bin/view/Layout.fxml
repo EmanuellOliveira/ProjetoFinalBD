@@ -69,63 +69,63 @@
                                     </ImageView>
                                     <Button fx:id="addCliente" layoutX="24.0" layoutY="252.0" mnemonicParsing="false" onAction="#adicionarCliente" text="Adicionar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="altCliente" layoutX="152.0" layoutY="252.0" mnemonicParsing="false" onAction="#alterarCliente" text="Alterar">
+                                    <Button fx:id="altCliente" layoutX="120.0" layoutY="252.0" mnemonicParsing="false" onAction="#alterarCliente" text="Alterar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="delCliente" layoutX="258.0" layoutY="252.0" mnemonicParsing="false" onAction="#deletarCliente" prefHeight="38.0" prefWidth="93.0" text="Deletar">
+                                    <Button fx:id="delCliente" layoutX="197.0" layoutY="250.0" mnemonicParsing="false" onAction="#deletarCliente" prefHeight="34.0" prefWidth="79.0" text="Deletar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
                                     <Button fx:id="clearBottom" layoutX="658.0" layoutY="26.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="38.0" prefWidth="103.0" text="Limpar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
                                     <TextField fx:id="nomeCliente" layoutX="24.0" layoutY="74.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
                                     <Text layoutX="24.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <TextField fx:id="empresaCliente" layoutX="24.0" layoutY="139.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
                                     <Text layoutX="25.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Empresa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <TextField fx:id="contatoCliente" layoutX="299.0" layoutY="139.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
                                     <Text layoutX="299.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contato">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <Text layoutX="673.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_cliente">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <TextField fx:id="campoIDCliente" layoutX="684.0" layoutY="126.0" prefHeight="25.0" prefWidth="50.0">
+                                    <TextField fx:id="campoIDCliente" layoutX="678.0" layoutY="124.0" prefHeight="25.0" prefWidth="50.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
-                                    <Button fx:id="pesqCliente" layoutX="662.0" layoutY="177.0" mnemonicParsing="false" onAction="#pesquisarCliente" text="Pesquisar">
+                                    <Button fx:id="pesqCliente" layoutX="664.0" layoutY="169.0" mnemonicParsing="false" onAction="#pesquisarCliente" text="Pesquisar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
                                     <TextField fx:id="emailCliente" layoutX="299.0" layoutY="74.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
                                     <Text layoutX="299.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E- mail">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                  </children>
                               </AnchorPane>
@@ -163,90 +163,90 @@
                                     </ImageView>
                                     <TextArea fx:id="descProjeto" layoutX="447.0" layoutY="45.0" prefHeight="109.0" prefWidth="200.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextArea>
-                                    <Button fx:id="addProjeto" layoutX="282.0" layoutY="33.0" mnemonicParsing="false" onAction="#adicionarProjeto" prefHeight="38.0" prefWidth="104.0" text="Adicionar">
+                                    <Button fx:id="addProjeto" layoutX="282.0" layoutY="33.0" mnemonicParsing="false" onAction="#adicionarProjeto" prefHeight="30.0" prefWidth="93.0" text="Adicionar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="altProjeto" layoutX="293.0" layoutY="85.0" mnemonicParsing="false" onAction="#alterarProjeto" text="Alterar">
+                                    <Button fx:id="altProjeto" layoutX="299.0" layoutY="85.0" mnemonicParsing="false" onAction="#alterarProjeto" prefHeight="8.0" prefWidth="60.0" text="Alterar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="delProjeto" layoutX="282.0" layoutY="139.0" mnemonicParsing="false" onAction="#deletarProjeto" prefHeight="38.0" prefWidth="94.0" text="Deletar">
+                                    <Button fx:id="delProjeto" layoutX="282.0" layoutY="139.0" mnemonicParsing="false" onAction="#deletarProjeto" prefHeight="1.0" prefWidth="94.0" text="Deletar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <Button fx:id="limpProjeto" layoutX="687.0" layoutY="24.0" mnemonicParsing="false" onAction="#limparCamposP" prefHeight="38.0" prefWidth="101.0" text="Limpar">
+                                    <Button fx:id="limpProjeto" layoutX="698.0" layoutY="23.0" mnemonicParsing="false" onAction="#limparCamposP" prefHeight="30.0" prefWidth="79.0" text="Limpar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
                                     <Text layoutX="447.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <Text layoutX="698.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_projeto">
+                                    <Text layoutX="705.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_projeto">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <TextField fx:id="campoIDProjeto" layoutX="712.0" layoutY="130.0" prefHeight="25.0" prefWidth="50.0">
+                                    <TextField fx:id="campoIDProjeto" layoutX="713.0" layoutY="124.0" prefHeight="25.0" prefWidth="50.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
-                                    <Button fx:id="pesqProjeto" layoutX="690.0" layoutY="183.0" mnemonicParsing="false" onAction="#pesquisarProjeto" text="Pesquisar">
+                                    <Button fx:id="pesqProjeto" layoutX="699.0" layoutY="166.0" mnemonicParsing="false" onAction="#pesquisarProjeto" text="Pesquisar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Button>
-                                    <TextField fx:id="nomeProjeto" layoutX="24.0" layoutY="37.0" prefHeight="38.0" prefWidth="175.0">
+                                    <TextField fx:id="nomeProjeto" layoutX="24.0" layoutY="37.0" prefHeight="0.0" prefWidth="175.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
-                                    <TextField fx:id="orcamentoProjeto" layoutX="25.0" layoutY="237.0" prefHeight="38.0" prefWidth="174.0">
+                                    <TextField fx:id="orcamentoProjeto" layoutX="25.0" layoutY="237.0" prefHeight="0.0" prefWidth="174.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></TextField>
                                     <Text layoutX="24.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nome">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <Text layoutX="24.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Inicial">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <Text layoutX="24.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orçamento">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
                                     <Text layoutX="236.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <SplitMenuButton fx:id="statusProjeto" layoutX="236.0" layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="174.0" text="-">
+                                    <SplitMenuButton fx:id="statusProjeto" layoutX="236.0" layoutY="236.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="174.0" text="-">
                                       <items>
                                       </items>
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </SplitMenuButton>
-                                    <SplitMenuButton fx:id="clienteProjeto" layoutX="442.0" layoutY="236.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="210.0" text="-">
+                                    <SplitMenuButton fx:id="clienteProjeto" layoutX="442.0" layoutY="236.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="179.0" text="-">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
                                         <MenuItem mnemonicParsing="false" text="Action 2" />
                                       </items>
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </SplitMenuButton>
                                     <Text layoutX="442.0" layoutY="233.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <DatePicker fx:id="dInicialProjeto" layoutX="24.0" layoutY="102.0" prefHeight="35.0" prefWidth="174.0" />
+                                    <DatePicker fx:id="dInicialProjeto" layoutX="24.0" layoutY="102.0" prefHeight="29.0" prefWidth="174.0" />
                                     <Text layoutX="24.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Final">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font></Text>
-                                    <DatePicker fx:id="dFinalProjeto" layoutX="24.0" layoutY="166.0" prefHeight="33.0" prefWidth="174.0" />
+                                    <DatePicker fx:id="dFinalProjeto" layoutX="24.0" layoutY="166.0" prefHeight="29.0" prefWidth="174.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="227.0" prefWidth="710.0">
@@ -284,88 +284,88 @@
                                           <Image url="@../../resources/G.png" />
                                        </image>
                                     </ImageView>
-                                    <Button fx:id="selecionarEtapa" layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#selecionarEtapaProjeto" text="Selecionar Etapa">
+                                    <Button fx:id="selecionarEtapa" layoutX="50.0" layoutY="244.0" mnemonicParsing="false" onAction="#selecionarEtapaProjeto" prefHeight="21.0" prefWidth="120.0" text="Selecionar Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="altEtapa" layoutX="231.0" layoutY="244.0" mnemonicParsing="false" onAction="#alterarEtapaProjeto" text="Alterar">
+                                    <Button fx:id="altEtapa" layoutX="209.0" layoutY="244.0" mnemonicParsing="false" onAction="#alterarEtapaProjeto" text="Alterar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="limparCamposEtapa" layoutX="668.0" layoutY="36.0" mnemonicParsing="false" onAction="#limparCamposEtapa" prefHeight="38.0" prefWidth="103.0" text="Limpar">
+                                    <Button fx:id="limparCamposEtapa" layoutX="668.0" layoutY="36.0" mnemonicParsing="false" onAction="#limparCamposEtapa" prefHeight="30.0" prefWidth="89.0" text="Limpar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Button>
                                     <Text layoutX="50.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projeto">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="49.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
-                                    <Text layoutX="687.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_Etapa">
+                                    <Text layoutX="685.0" layoutY="131.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID_Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
-                                    <TextField fx:id="campoIDEtapaProjeto" layoutX="695.0" layoutY="140.0" prefHeight="25.0" prefWidth="50.0">
+                                    <TextField fx:id="campoIDEtapaProjeto" layoutX="687.0" layoutY="141.0" prefHeight="25.0" prefWidth="50.0">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </TextField>
-                                    <Button fx:id="pesqEtapa" layoutX="673.0" layoutY="187.0" mnemonicParsing="false" onAction="#pesquisarEtapa" text="Pesquisar">
+                                    <Button fx:id="pesqEtapa" layoutX="673.0" layoutY="182.0" mnemonicParsing="false" onAction="#pesquisarEtapa" prefHeight="14.0" prefWidth="77.0" text="Pesquisar">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Button>
                                     <Text layoutX="339.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status da Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
-                                    <SplitMenuButton fx:id="splitMenuProjeto" layoutX="49.0" layoutY="66.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="249.0" text="-">
+                                    <SplitMenuButton fx:id="splitMenuProjeto" layoutX="49.0" layoutY="66.0" mnemonicParsing="false" prefHeight="9.0" prefWidth="190.0" text="-">
                                       <items>
                                         <MenuItem mnemonicParsing="false" text="Action 1" />
                                         <MenuItem mnemonicParsing="false" text="Action 2" />
                                       </items>
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </SplitMenuButton>
-                                    <SplitMenuButton fx:id="splitMenuEtapa" layoutX="49.0" layoutY="156.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="247.0" text="-">
+                                    <SplitMenuButton fx:id="splitMenuEtapa" layoutX="49.0" layoutY="156.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="190.0" text="-">
                                        <items>
                                           <MenuItem mnemonicParsing="false" text="Action 1" />
                                           <MenuItem mnemonicParsing="false" text="Action 2" />
                                        </items>
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </SplitMenuButton>
-                                    <SplitMenuButton fx:id="splitMenuStatusEtapa" layoutX="339.0" layoutY="197.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="263.0" text="-">
+                                    <SplitMenuButton fx:id="splitMenuStatusEtapa" layoutX="339.0" layoutY="197.0" mnemonicParsing="false" prefHeight="2.0" prefWidth="198.0" text="-">
                                        <items>
                                           <MenuItem mnemonicParsing="false" text="Action 1" />
                                           <MenuItem mnemonicParsing="false" text="Action 2" />
                                        </items>
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </SplitMenuButton>
                                     <DatePicker fx:id="dataIniEtapa" layoutX="339.0" layoutY="55.0" prefHeight="30.0" prefWidth="174.0" />
                                     <DatePicker fx:id="dataFiniEtapa" layoutX="339.0" layoutY="126.0" prefHeight="30.0" prefWidth="174.0" />
                                     <Text layoutX="339.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Inicial da Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
                                     <Text layoutX="339.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Data Final da Etapa">
                                        <font>
-                                          <Font size="17.0" />
+                                          <Font size="14.0" />
                                        </font>
                                     </Text>
                                  </children>

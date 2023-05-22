@@ -43,7 +43,7 @@ public class EtapaDAO {
         }
     }
     
-    public List<Etapa> getEtapa(){
+    public List<Etapa> getAll(){
 
         String sql = "SELECT * FROM etapa;";
 

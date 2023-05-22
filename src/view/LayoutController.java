@@ -31,6 +31,7 @@ import models.Projeto;
 public class LayoutController {
 
     private ClienteDAO clientes;
+    private EtapaDAO etapas;
     private ProjetoDAO projetos;
     private Etapa_projetoDAO etapaProjetoDAO;
     private EtapaDAO etapasDAO = new EtapaDAO();
@@ -38,6 +39,7 @@ public class LayoutController {
     public void initialize(){
 
         clientes = new ClienteDAO();
+        etapas = new EtapaDAO();
         projetos = new ProjetoDAO();
         etapaProjetoDAO = new Etapa_projetoDAO();
         
@@ -146,7 +148,7 @@ public class LayoutController {
     }
 
     private void atualizarListaEtapa() {
-        List<Etapa> listaEtapas = etapasDAO.getEtapa();
+        List<Etapa> listaEtapas = etapasDAO.getAll();
         ObservableList<MenuItem> items = splitMenuEtapa.getItems();
         items.clear();
     
@@ -370,38 +372,33 @@ public class LayoutController {
 
     @FXML
     void selecionarEtapaProjeto(ActionEvent event) {
-        try {
-            int idEtapa = Integer.parseInt(splitMenuEtapa.getText());
 
-            LocalDate novaDataInicio = dataIniEtapa.getValue();
-            LocalDate novaDataFinal = dataFiniEtapa.getValue();
-            String novoStatusEtapa = splitMenuStatusEtapa.getText();
+        int idEtapa = Integer.parseInt(splitMenuEtapa.getText());
+        int idProjeto = Integer.parseInt(splitMenuProjeto.getText());
 
-            Etapa_projeto novaEtapaProjeto = new Etapa_projeto();
+        LocalDate novaDataInicio = dataIniEtapa.getValue();
+        LocalDate novaDataFinal = dataFiniEtapa.getValue();
+        String novoStatusEtapa = splitMenuStatusEtapa.getText();
 
-            EtapaDAO etapaDAO = new EtapaDAO();
-            Etapa etapa = etapaDAO.getByID(idEtapa);
 
-                if (etapa != null) {
-                    String nomeEtapa = etapa.getNomeEtapa();
-                    novaEtapaProjeto.setDataInicio(novaDataInicio);
-                    novaEtapaProjeto.setDataFinal(novaDataFinal);
-                    novaEtapaProjeto.setStatusEtapa(novoStatusEtapa);
+        Etapa_projeto novaEtapaProjeto = new Etapa_projeto();
+        novaEtapaProjeto.setIdProjeto(idProjeto);
+        novaEtapaProjeto.setIdEtapa(idEtapa);
+        novaEtapaProjeto.setDataInicio(novaDataInicio);
+        novaEtapaProjeto.setDataFinal(novaDataFinal);
+        novaEtapaProjeto.setStatusEtapa(novoStatusEtapa);
 
-                    Etapa_projetoDAO etapaProjetoDAO = new Etapa_projetoDAO();
-                    etapaProjetoDAO.save(novaEtapaProjeto);
+        Etapa_projetoDAO etapaProjetoDAO = new Etapa_projetoDAO();
+        etapaProjetoDAO.save(novaEtapaProjeto);
 
-                    atualizaTabelaEtapas();
-                    limparCamposEtapa(event);
-                    etapaProjetoAdicionada();
-                } else {
-                }
+        atualizaTabelaEtapas();
+        limparCamposEtapa(event);
+        etapaProjetoAdicionada();
 
-            } catch (Exception e) {
-            erroDeInsercaoDeDados();
-        }
- 
-    }
+    } 
+    
+
+
 
 
 
@@ -412,6 +409,11 @@ public class LayoutController {
             String empresa = empresaCliente.getText();
             String email = emailCliente.getText();
             String contato = contatoCliente.getText();
+
+            if (nome.isEmpty() || empresa.isEmpty() || email.isEmpty() || contato.isEmpty()) {
+                camposVazios();
+                return;
+            }
 
             Cliente cliente = new Cliente(nome, empresa, email, contato);
             clientes.save(cliente);
@@ -443,20 +445,22 @@ public class LayoutController {
             String clienteSelecionado = clienteProjeto.getText();
             Cliente cliente = encontrarClientePorNome(clienteSelecionado);
 
-                if (cliente != null) {
-                    Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status, cliente.getIdCliente());
-                    projetos.save(projeto);
-            
-                    limparCamposP(event);
-                    atualizarTabelaProjetos();
-                    atualizarListaClientes();
-                    projetoAdicionado();
-
-                } else {
-                    clienteNaoEncontrado();
+                if (nome.isEmpty() || descricao.isEmpty() || dataInicial == null || dataFinal == null || orcamentoProjeto.getText().isEmpty() || status.isEmpty() || cliente == null) {
+                camposVazios();
+                return;
                 }
-        }catch (Exception e ){
-            erroDeInsercaoDeDados();  
+
+                Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status, cliente.getIdCliente());
+                projetos.save(projeto);
+         
+                limparCamposP(event);
+                atualizarTabelaProjetos();
+                atualizarListaClientes();
+                projetoAdicionado();
+                atualizarListaProjetos();
+
+            }catch (Exception e ){
+                erroDeInsercaoDeDados();  
         }
     }
 
@@ -488,6 +492,7 @@ public class LayoutController {
                     atualizarListaClientes();
                     limparCampos(event);
                     clienteAlterado();
+                    atualizarListaProjetos();
 
                 } else {
                     clienteNaoEncontrado();
@@ -535,6 +540,7 @@ public class LayoutController {
 
                         atualizarTabelaProjetos();
                         atualizarListaClientes();
+                        atualizarListaProjetos();
 
                         limparCamposP(event);
 
@@ -546,47 +552,60 @@ public class LayoutController {
             }
         }catch(Exception e){
             erroDeInsercaoDeDados();
+            e.printStackTrace();
         }
     }
 
     @FXML
     void deletarCliente(ActionEvent event) {
-        String idClienteText = campoIDCliente.getText();
-        int idCliente = Integer.parseInt(idClienteText);
+        try{
+            String idClienteText = campoIDCliente.getText();
+            int idCliente = Integer.parseInt(idClienteText);
 
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.getByID(idCliente);
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getByID(idCliente);
 
-            if (cliente != null) {
-            clienteDAO.deleteByID(idCliente);
-            atualizarTabelaClientes();
-            atualizarListaClientes();
-            atualizarTabelaProjetos();
-            limparCampos(event);
-            clienteDeletado();
-        } else {
-        clienteNaoEncontrado();
+                if (cliente != null) {
+                    clienteDAO.deleteByID(idCliente);
+                    atualizarTabelaClientes();
+                    atualizarListaClientes();
+                    atualizarTabelaProjetos();
+                    limparCampos(event);
+                    clienteDeletado();
+
+                } else {
+                clienteNaoEncontrado();
+            }
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+            e.printStackTrace();
         }
 
     }
 
     @FXML
     void deletarProjeto(ActionEvent event) throws ClassNotFoundException {
-        String idProjetoText = campoIDProjeto.getText();
-        int idProjeto = Integer.parseInt(idProjetoText);
+        try{
+            String idProjetoText = campoIDProjeto.getText();
+            int idProjeto = Integer.parseInt(idProjetoText);
 
-        ProjetoDAO projetoDAO = new ProjetoDAO();
-        Projeto projeto = projetoDAO.getByID(idProjeto);
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+            Projeto projeto = projetoDAO.getByID(idProjeto);
 
-        if (projeto != null) {
-            projetoDAO.deleteByID(idProjeto);;
-            atualizarTabelaProjetos();
-            atualizarListaClientes();
-            atualizarTabelaClientes();
-            limparCamposP(event);
-            projetoDeletado();
-        } else {
-        projetoNaoEncontrado();
+                if (projeto != null) {
+                    projetoDAO.deleteByID(idProjeto);;
+                    atualizarTabelaProjetos();
+                    atualizarListaClientes();
+                    atualizarTabelaClientes();
+                    atualizarListaProjetos();
+                    limparCamposP(event);
+                    projetoDeletado();
+                } else {
+                projetoNaoEncontrado();
+            }
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+            e.printStackTrace();
         }
     }
 
@@ -612,57 +631,65 @@ public class LayoutController {
 
     @FXML
     void pesquisarCliente(ActionEvent event) {
+        try{
+            String idClienteText = campoIDCliente.getText();
+            int idCliente = Integer.parseInt(idClienteText);
 
-        String idClienteText = campoIDCliente.getText();
-        int idCliente = Integer.parseInt(idClienteText);
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getByID(idCliente);
 
-        ClienteDAO clienteDAO = new ClienteDAO();
-        Cliente cliente = clienteDAO.getByID(idCliente);
+                if (cliente != null) {
 
-            if (cliente != null) {
+                    nomeCliente.setText(cliente.getNomeCliente());
+                    empresaCliente.setText(cliente.getEmpresa());
+                    emailCliente.setText(cliente.getEmail());
+                    contatoCliente.setText(cliente.getTeleCel());
 
-            nomeCliente.setText(cliente.getNomeCliente());
-            empresaCliente.setText(cliente.getEmpresa());
-            emailCliente.setText(cliente.getEmail());
-            contatoCliente.setText(cliente.getTeleCel());
-
-            clienteProjeto.setText(cliente.getNomeCliente());
-            } else {
-            clienteNaoEncontrado();
+                    clienteProjeto.setText(cliente.getNomeCliente());
+                } else {
+                clienteNaoEncontrado();
+            }
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+            e.printStackTrace();
         }
     }
 
 
     @FXML
     void pesquisarProjeto(ActionEvent event) throws ClassNotFoundException {
-        String idProjetoText = campoIDProjeto.getText();
-        int idProjeto = Integer.parseInt(idProjetoText);
+        try{
+            String idProjetoText = campoIDProjeto.getText();
+            int idProjeto = Integer.parseInt(idProjetoText);
 
-        ProjetoDAO projetoDAO = new ProjetoDAO();
-        Projeto projeto = projetoDAO.getByID(idProjeto);
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+            Projeto projeto = projetoDAO.getByID(idProjeto);
 
-            if (projeto != null) {
+                if (projeto != null) {
             
-            nomeProjeto.setText(projeto.getNomeProjeto());
-            descProjeto.setText(projeto.getDescricao());
-            dInicialProjeto.setValue(projeto.getDataInicio());
-            dFinalProjeto.setValue(projeto.getDataFinal());
-            orcamentoProjeto.setText(String.valueOf(projeto.getOrcamento()));
-            statusProjeto.setText(projeto.getStatus());
+                    nomeProjeto.setText(projeto.getNomeProjeto());
+                    descProjeto.setText(projeto.getDescricao());
+                    dInicialProjeto.setValue(projeto.getDataInicio());
+                    dFinalProjeto.setValue(projeto.getDataFinal());
+                    orcamentoProjeto.setText(String.valueOf(projeto.getOrcamento()));
+                    statusProjeto.setText(projeto.getStatus());
 
-            ClienteDAO clienteDAO = new ClienteDAO();
-            Cliente cliente = clienteDAO.getByID(projeto.getIdCliente());
-            clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = clienteDAO.getByID(projeto.getIdCliente());
+                    clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
 
-            if (cliente != null) {
-                clienteProjeto.setText(cliente.getIdCliente() + " - " + cliente.getNomeCliente());
-            } else {
-                clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
+                        if (cliente != null) {
+                            clienteProjeto.setText(cliente.getIdCliente() + " - " + cliente.getNomeCliente());
+                        } else {
+                        clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
+                    }
+                } else {
+                projetoNaoEncontrado();
             }
-        } else {
-            projetoNaoEncontrado();
-        }
-                   
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+            e.printStackTrace();
+        }            
     }
 
 
@@ -702,6 +729,18 @@ public class LayoutController {
             }
         }
         return null; 
+    }
+
+    private Etapa encontrarEtapaPorNome (String nome){
+        List<Etapa> listaEtapas = etapas.getAll();
+        
+        for (Etapa etapa : listaEtapas){
+            String nomeEtapa = etapa.getIdEtapa() + " - " + etapa.getNomeEtapa();
+            if (nomeEtapa.equals(nome)){
+                return etapa;
+            }
+        } 
+        return null;  
     }
     
     private void clienteDeletado() {
@@ -797,6 +836,14 @@ public class LayoutController {
             alert.setTitle("Etapa do Projeto");
             alert.setHeaderText(null);
             alert.setContentText("Etapa adicionada com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void camposVazios() {
+        Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Não pode haver campos vazios!");
             alert.showAndWait();
     }
 
