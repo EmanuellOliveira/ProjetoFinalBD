@@ -1,4 +1,4 @@
-CREATE DATABASE projetosBD;
+CREATE DATABASE projetoBD;
 
 CREATE TABLE cliente(
 	ID_cliente INT PRIMARY KEY AUTO_INCREMENT,
@@ -28,7 +28,7 @@ CREATE TABLE etapa(
     nome VARCHAR(30) NOT NULL, 
     descricao TEXT NOT NULL,
     ID_equipe INT NOT NULL UNIQUE,
-    FOREIGN KEY (ID_equipe) REFERENCES equipe(ID_equipe)
+    FOREIGN KEY (ID_equipe) REFERENCES equipe(ID_equipe) ON DELETE CASCADE
     );
     
 INSERT INTO etapa (nome, descricao, ID_equipe)
@@ -49,19 +49,19 @@ CREATE TABLE projeto(
     orcamento decimal(10,2) NOT NULL,
     status VARCHAR(30),
     ID_cliente INT NOT NULL,
-    FOREIGN KEY (ID_cliente) REFERENCES cliente(ID_cliente)
+    FOREIGN KEY (ID_cliente) REFERENCES cliente(ID_cliente) ON DELETE CASCADE
     );
 
     
 CREATE TABLE etapa_projeto(
-	ID_etapasprojeto INT PRIMARY KEY AUTO_INCREMENT,
+	ID_etapaprojeto INT PRIMARY KEY AUTO_INCREMENT,
 	ID_projeto INT NOT NULL,
     ID_etapa INT NOT NULL,
     status_etapa VARCHAR(50) NOT NULL,
     data_inicio DATE NOT NULL,
     data_final DATE NOT NULL,
-    FOREIGN KEY (ID_projeto) REFERENCES projetos(ID_projeto),
-    FOREIGN KEY (ID_etapa) REFERENCES etapa(ID_etapa)
+    FOREIGN KEY (ID_projeto) REFERENCES projeto(ID_projeto) ON DELETE CASCADE,
+    FOREIGN KEY (ID_etapa) REFERENCES etapa(ID_etapa) ON DELETE CASCADE
     );
     
 
@@ -72,7 +72,7 @@ CREATE TABLE membros_de_equipe(
     telefone_celular VARCHAR(20) NOT NULL,
     cargo VARCHAR(50) NOT NULL,
     ID_equipe INT NOT NULL,
-    FOREIGN KEY (ID_equipe) REFERENCES equipe(ID_equipe)
+    FOREIGN KEY (ID_equipe) REFERENCES equipe(ID_equipe) ON DELETE CASCADE
     );
 
 INSERT INTO membros_de_equipe (nome, email, telefone_celular, cargo, ID_equipe)

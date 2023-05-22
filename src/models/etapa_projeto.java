@@ -1,15 +1,20 @@
 package models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Etapa_projeto {
     private int idEtapaProjeto;
     private int idProjeto;
     private int idEtapa;
     private String statusEtapa;
-    private Date dataInicio;
-    private Date dataFinal;
+    private LocalDate dataInicio;
+    private LocalDate dataFinal;
     
+    public Etapa_projeto() {
+    }
+
+    
+
     public int getIdEtapaProjeto() {
         return idEtapaProjeto;
     }
@@ -34,17 +39,17 @@ public class Etapa_projeto {
     public void setStatusEtapa(String statusEtapa) {
         this.statusEtapa = statusEtapa;
     }
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setDataInicio(LocalDate date) {
+        this.dataInicio = date;
     }
-    public Date getDataFinal() {
+    public LocalDate getDataFinal() {
         return dataFinal;
     }
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public void setDataFinal(LocalDate date) {
+        this.dataFinal = date;
     }
 
     

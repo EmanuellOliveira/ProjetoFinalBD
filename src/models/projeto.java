@@ -88,17 +88,4 @@ public class Projeto {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
-
-    @Override
-    public String toString() {
-        return "****** Projeto ******" +
-                "\nID do Projeto: " + idProjeto +
-                "\nNome do Projeto: " + nomeProjeto +
-                "\nDescrição: " + descricao +
-                "\nData de Início: " + dataInicio +
-                "\nData Final: " + dataFinal +
-                "\nOrçamento: " + orcamento +
-                "\nStatus: " + status +
-                "\nID do Cliente: " + idCliente;
-    }
 }

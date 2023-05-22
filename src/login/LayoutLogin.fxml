@@ -49,10 +49,10 @@
                   <Image url="@../../resources/G.png" />
                </image>
             </ImageView>
-            <TextField fx:id="campoNome" layoutX="439.0" layoutY="127.0" />
+            <TextField fx:id="campoNome" layoutX="439.0" layoutY="127.0" promptText="insira o usuário" />
             <Button fx:id="conectarServidor" layoutX="31.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleConectarServidor" prefHeight="31.0" prefWidth="124.0" text="Conectar Servidor" />
             <Text layoutX="439.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
-            <TextField fx:id="campoSenha" layoutX="439.0" layoutY="192.0" />
+            <TextField fx:id="campoSenha" accessibleRole="TEXT_AREA" layoutX="439.0" layoutY="192.0" promptText="Insira a senha" />
             <Text layoutX="439.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Senha" />
             <Button fx:id="botaoLogar" layoutX="468.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleBotaoLogar" prefHeight="45.0" prefWidth="90.0" text="LOGAR" />
          </children>

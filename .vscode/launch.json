@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "view.App",
+            "projectName": "IntegracaoBDJAVA_ec970937"
+        },
+        {
+            "type": "java",
             "name": "LayoutLogin",
             "request": "launch",
             "mainClass": "login.LayoutLogin",

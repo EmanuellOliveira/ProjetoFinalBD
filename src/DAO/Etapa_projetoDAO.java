@@ -25,8 +25,8 @@ public class Etapa_projetoDAO {
             pstm.setInt(1, etapaProjeto.getIdProjeto());
             pstm.setInt(2, etapaProjeto.getIdEtapa());
             pstm.setString(3, etapaProjeto.getStatusEtapa());
-            pstm.setDate(4, new Date(etapaProjeto.getDataInicio().getTime()));
-            pstm.setDate(5, new Date(etapaProjeto.getDataFinal().getTime()));
+            pstm.setDate(4, Date.valueOf(etapaProjeto.getDataInicio()));
+            pstm.setDate(5, Date.valueOf(etapaProjeto.getDataFinal()));
 
             pstm.execute();
         }catch (Exception e){
@@ -57,8 +57,8 @@ public class Etapa_projetoDAO {
                 novaEtapaProjeto.setIdProjeto(rset.getInt("ID_projeto"));
                 novaEtapaProjeto.setIdEtapa(rset.getInt("ID_etapa"));
                 novaEtapaProjeto.setStatusEtapa(rset.getString("status_etapa"));
-                novaEtapaProjeto.setDataInicio(rset.getDate("data_inicio"));
-                novaEtapaProjeto.setDataFinal(rset.getDate("data_final"));
+                novaEtapaProjeto.setDataInicio(rset.getDate("data_inicio").toLocalDate());
+                novaEtapaProjeto.setDataFinal(rset.getDate("data_final").toLocalDate());
 
                 etapa_projeto.add(novaEtapaProjeto);
 
@@ -115,5 +115,82 @@ public class Etapa_projetoDAO {
             }
         }
     }
+
+    public Etapa_projeto getByID(int id) {
+        String sql = "SELECT * FROM etapa_projeto WHERE ID_etapaprojeto = ?";
+    
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+        Etapa_projeto etapaProjeto = null;
+    
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            rset = pstm.executeQuery();
+    
+            if (rset.next()) {
+                etapaProjeto = new Etapa_projeto();
+                etapaProjeto.setIdEtapaProjeto(rset.getInt("ID_etapaprojeto"));
+                etapaProjeto.setIdProjeto(rset.getInt("ID_projeto"));
+                etapaProjeto.setIdEtapa(rset.getInt("ID_etapa"));
+                etapaProjeto.setStatusEtapa(rset.getString("status_etapa"));
+                etapaProjeto.setDataInicio(rset.getDate("data_inicio").toLocalDate());
+                etapaProjeto.setDataFinal(rset.getDate("data_final").toLocalDate());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    
+        return etapaProjeto;
+    }
+
+    public void update(Etapa_projeto etapaProjeto) {
+        String sql = "UPDATE etapa_projeto SET status_etapa = ?, data_inicio = ?, data_final = ? WHERE ID_etapaprojeto = ?";
+    
+        Connection conn = null;
+        PreparedStatement pstm = null;
+    
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setString(1, etapaProjeto.getStatusEtapa());
+            pstm.setDate(2, Date.valueOf(etapaProjeto.getDataInicio()));
+            pstm.setDate(3, Date.valueOf(etapaProjeto.getDataFinal()));
+            pstm.setInt(4, etapaProjeto.getIdEtapaProjeto());
+    
+            pstm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
 
 }

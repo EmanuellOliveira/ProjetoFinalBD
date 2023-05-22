@@ -4,11 +4,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 import DAO.ClienteDAO;
+import DAO.EtapaDAO;
+import DAO.Etapa_projetoDAO;
 import DAO.ProjetoDAO;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
@@ -17,19 +21,26 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import models.Cliente;
+import models.Etapa;
+import models.Etapa_projeto;
 import models.Projeto;
 
 public class LayoutController {
 
     private ClienteDAO clientes;
     private ProjetoDAO projetos;
+    private Etapa_projetoDAO etapaProjetoDAO;
+    private EtapaDAO etapasDAO = new EtapaDAO();
 
     public void initialize(){
 
         clientes = new ClienteDAO();
         projetos = new ProjetoDAO();
+        etapaProjetoDAO = new Etapa_projetoDAO();
+        
 
         colunaIDCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
         colunaNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
@@ -37,20 +48,115 @@ public class LayoutController {
         colunaEmailCliente.setCellValueFactory(new PropertyValueFactory<>("email"));
         colunaContatoCliente.setCellValueFactory(new PropertyValueFactory<>("teleCel"));
 
-        colunaIDProjeto.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colunaNomeProjeto.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colunaIDProjeto.setCellValueFactory(new PropertyValueFactory<>("idProjeto"));
+        colunaNomeProjeto.setCellValueFactory(new PropertyValueFactory<>("nomeProjeto"));
         colunaDescProjeto.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-        colunaDInicialProjeto.setCellValueFactory(new PropertyValueFactory<>("dataInicial"));
+        colunaDInicialProjeto.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
         colunaDFinalProjeto.setCellValueFactory(new PropertyValueFactory<>("dataFinal"));
         colunaOrcamentoProjeto.setCellValueFactory(new PropertyValueFactory<>("orcamento"));
         colunaStatusProjeto.setCellValueFactory(new PropertyValueFactory<>("status"));
-        colunaClienteProjeto.setCellValueFactory(new PropertyValueFactory<>("cliente"));
+        
+        colunaClienteProjeto.setCellValueFactory(cellData -> {
+            Projeto projeto = cellData.getValue();
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getByID(projeto.getIdCliente());
+            String nomeCliente = cliente != null ? cliente.getNomeCliente() : "";
+            return new SimpleStringProperty(projeto.getIdCliente() + " - " + nomeCliente);
+        });
 
+        colunaIDEtapa.setCellValueFactory(new PropertyValueFactory<>("idEtapa"));
+        colunaEtapa.setCellValueFactory(new PropertyValueFactory<>("nomeEtapa"));
+        colunaDIniEtapa.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
+        colunaDFiniEtapa.setCellValueFactory(new PropertyValueFactory<>("dataFinal"));
+        colunaProjetoEtapa.setCellValueFactory(cellData -> {
+            Etapa_projeto etapaProjeto = cellData.getValue();
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+            Projeto projeto = null;
+        
+            try {
+                projeto = projetoDAO.getByID(etapaProjeto.getIdProjeto());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        
+            String nomeProjeto = projeto != null ? projeto.getNomeProjeto() : "";
+            return new SimpleStringProperty(etapaProjeto.getIdProjeto() + " - " + nomeProjeto);
+        });
+        
+        colunaStatusEtapa.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+
+        splitMenuStatusEtapa.getItems().clear();
+
+        splitMenuStatusEtapa.getItems().add(new MenuItem("Aguardando"));
+        splitMenuStatusEtapa.getItems().get(0).setOnAction(event -> splitMenuStatusEtapa.setText("Aguardando"));
+
+        splitMenuStatusEtapa.getItems().add(new MenuItem("Em andamento"));
+        splitMenuStatusEtapa.getItems().get(1).setOnAction(event -> splitMenuStatusEtapa.setText("Em andamento"));
+
+        splitMenuStatusEtapa.getItems().add(new MenuItem("Concluído"));
+        splitMenuStatusEtapa.getItems().get(2).setOnAction(event -> splitMenuStatusEtapa.setText("Concluído"));
+
+        splitMenuStatusEtapa.getItems().add(new MenuItem("Cancelado"));
+        splitMenuStatusEtapa.getItems().get(3).setOnAction(event -> splitMenuStatusEtapa.setText("Cancelado"));
+
+        statusProjeto.getItems().clear();
+
+        statusProjeto.getItems().add(new MenuItem("Aguardando"));
+        statusProjeto.getItems().get(0).setOnAction(event -> statusProjeto.setText("Aguardando"));
+
+        statusProjeto.getItems().add(new MenuItem("Em andamento"));
+        statusProjeto.getItems().get(1).setOnAction(event -> statusProjeto.setText("Em andamento"));
+
+        statusProjeto.getItems().add(new MenuItem("Concluído"));
+        statusProjeto.getItems().get(2).setOnAction(event -> statusProjeto.setText("Concluído"));
+
+        statusProjeto.getItems().add(new MenuItem("Cancelado"));
+        statusProjeto.getItems().get(3).setOnAction(event -> statusProjeto.setText("Cancelado"));
+        
         atualizarTabelaClientes();
         atualizarTabelaProjetos();
+        atualizaTabelaEtapas();
         atualizarListaClientes();
+        atualizarListaProjetos();
+        atualizarListaEtapa();
+
+        
+
+
         
     }
+
+    private void atualizarListaProjetos() {
+        List<Projeto> listaProjetos = projetos.getAll();
+        ObservableList<MenuItem> items = splitMenuProjeto.getItems();
+        items.clear();
+    
+        for (Projeto projeto : listaProjetos) {
+            MenuItem menuItem = new MenuItem(projeto.getIdProjeto() + " - " + projeto.getNomeProjeto());
+            menuItem.setOnAction(event -> splitMenuProjeto.setText(projeto.getIdProjeto() + " - " + projeto.getNomeProjeto()));
+            items.add(menuItem);
+        }
+    }
+    
+    private void atualizaTabelaEtapas() {
+        List<Etapa_projeto> listaEtapas = etapaProjetoDAO.getEtapa_projeto();
+        ObservableList<Etapa_projeto> observableListEtapas = FXCollections.observableArrayList(listaEtapas);
+        tableViewEtapa.setItems(observableListEtapas);
+    }
+
+    private void atualizarListaEtapa() {
+        List<Etapa> listaEtapas = etapasDAO.getEtapa();
+        ObservableList<MenuItem> items = splitMenuEtapa.getItems();
+        items.clear();
+    
+        for (Etapa etapa : listaEtapas) {
+            MenuItem menuItem = new MenuItem(etapa.getIdEtapa() + " - " + etapa.getNomeEtapa());
+            menuItem.setOnAction(event -> splitMenuEtapa.setText(etapa.getIdEtapa() + " - " + etapa.getNomeEtapa()));
+            items.add(menuItem);
+        }
+    }
+    
 
     @FXML
     private Button addCliente;
@@ -134,10 +240,10 @@ public class LayoutController {
     private TextField empresaCliente;
 
     @FXML
-    private TextField idCliente;
+    private TextField campoIDCliente;
 
     @FXML
-    private TextField idProjeto;
+    private TextField campoIDProjeto;
 
     @FXML
     private Button limpProjeto;
@@ -167,55 +273,334 @@ public class LayoutController {
     private TableView<Projeto> tableViewProjeto;
 
     @FXML
-    void adicionarCliente(ActionEvent event) {
+    private Button altEtapa;
 
-        String nome = nomeCliente.getText();
-        String empresa = empresaCliente.getText();
-        String email = emailCliente.getText();
-        String contato = contatoCliente.getText();
+    @FXML
+    private TextField campoIDEtapaProjeto;
 
-        Cliente cliente = new Cliente(nome, empresa, email, contato);
-        clientes.save(cliente);
+    @FXML
+    private TableColumn<Etapa_projeto, LocalDate> colunaDFiniEtapa;
 
-        limparCamposCliente();
+    @FXML
+    private TableColumn<Etapa_projeto, LocalDate> colunaDIniEtapa;
 
-        atualizarTabelaClientes();
-        atualizarListaClientes();
+    @FXML
+    private TableColumn<Etapa_projeto, String> colunaEtapa;
+
+    @FXML
+    private TableColumn<Etapa_projeto, Integer> colunaIDEtapa;
+
+    @FXML
+    private TableColumn<Etapa_projeto, String> colunaProjetoEtapa;
+
+    @FXML
+    private TableColumn<Etapa_projeto, String> colunaStatusEtapa;
+
+    @FXML
+    private DatePicker dataFiniEtapa;
+
+    @FXML
+    private DatePicker dataIniEtapa;
+
+    @FXML
+    private Button limparCamposEtapa;
+
+    @FXML
+    private Button pesqEtapa;
+
+    @FXML
+    private Button selecionarEtapa;
+
+    @FXML
+    private SplitMenuButton splitMenuEtapa;
+
+    @FXML
+    private SplitMenuButton splitMenuProjeto;
+
+    @FXML
+    private SplitMenuButton splitMenuStatusEtapa;
+
+    @FXML
+    private TableView<Etapa_projeto> tableViewEtapa;
+
+    @FXML
+    void alterarEtapaProjeto(ActionEvent event) {
+        try {
+            String idEtapaProjetoText = campoIDEtapaProjeto.getText();
+            int idEtapaProjeto = Integer.parseInt(idEtapaProjetoText);
+    
+            Etapa_projetoDAO etapaProjetoDAO = new Etapa_projetoDAO();
+            Etapa_projeto etapaProjeto = etapaProjetoDAO.getByID(idEtapaProjeto);
+    
+            if (etapaProjeto != null) {
+                LocalDate novaDataInicio = dataIniEtapa.getValue();
+                LocalDate novaDataFinal = dataFiniEtapa.getValue();
+                String novoStatusEtapa = splitMenuStatusEtapa.getText();
+    
+                etapaProjeto.setDataInicio(novaDataInicio);
+                etapaProjeto.setDataFinal(novaDataFinal);
+                etapaProjeto.setStatusEtapa(novoStatusEtapa);
+    
+                etapaProjetoDAO.update(etapaProjeto);
+    
+                atualizaTabelaEtapas();
+    
+                limparCamposEtapa(event);
+    
+                etapaProjetoAlterada();
+            } else {
+                etapaProjetoNaoEncontrada();
+            }
+        } catch (Exception e) {
+            erroDeInsercaoDeDados();
+        }
     }
 
-    private void limparCamposCliente() {
+    
+
+    @FXML
+    void limparCamposEtapa(ActionEvent event) {
+
+    }
+
+    @FXML
+    void pesquisarEtapa(ActionEvent event) {
+
+    }
+
+    @FXML
+    void selecionarEtapaProjeto(ActionEvent event) {
+        try {
+            int idEtapa = Integer.parseInt(splitMenuEtapa.getText());
+
+            LocalDate novaDataInicio = dataIniEtapa.getValue();
+            LocalDate novaDataFinal = dataFiniEtapa.getValue();
+            String novoStatusEtapa = splitMenuStatusEtapa.getText();
+
+            Etapa_projeto novaEtapaProjeto = new Etapa_projeto();
+
+            EtapaDAO etapaDAO = new EtapaDAO();
+            Etapa etapa = etapaDAO.getByID(idEtapa);
+
+                if (etapa != null) {
+                    String nomeEtapa = etapa.getNomeEtapa();
+                    novaEtapaProjeto.setDataInicio(novaDataInicio);
+                    novaEtapaProjeto.setDataFinal(novaDataFinal);
+                    novaEtapaProjeto.setStatusEtapa(novoStatusEtapa);
+
+                    Etapa_projetoDAO etapaProjetoDAO = new Etapa_projetoDAO();
+                    etapaProjetoDAO.save(novaEtapaProjeto);
+
+                    atualizaTabelaEtapas();
+                    limparCamposEtapa(event);
+                    etapaProjetoAdicionada();
+                } else {
+                }
+
+            } catch (Exception e) {
+            erroDeInsercaoDeDados();
+        }
+ 
+    }
+
+
+
+    @FXML
+    void adicionarCliente(ActionEvent event) {
+        try{
+            String nome = nomeCliente.getText();
+            String empresa = empresaCliente.getText();
+            String email = emailCliente.getText();
+            String contato = contatoCliente.getText();
+
+            Cliente cliente = new Cliente(nome, empresa, email, contato);
+            clientes.save(cliente);
+
+            atualizarTabelaClientes();
+            atualizarListaClientes();
+
+            limparCampos(event);
+
+            clienteAdicionado();
+
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+        }
+        
+    }
+
+
+    @FXML
+    void adicionarProjeto(ActionEvent event) {
+        try{
+            String nome = nomeProjeto.getText();
+            String descricao = descProjeto.getText();
+            LocalDate dataInicial = dInicialProjeto.getValue();
+            LocalDate dataFinal = dFinalProjeto.getValue();
+            float orcamenteo = Float.parseFloat(orcamentoProjeto.getText());
+            String status = statusProjeto.getText();
+
+            String clienteSelecionado = clienteProjeto.getText();
+            Cliente cliente = encontrarClientePorNome(clienteSelecionado);
+
+                if (cliente != null) {
+                    Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status, cliente.getIdCliente());
+                    projetos.save(projeto);
+            
+                    limparCamposP(event);
+                    atualizarTabelaProjetos();
+                    atualizarListaClientes();
+                    projetoAdicionado();
+
+                } else {
+                    clienteNaoEncontrado();
+                }
+        }catch (Exception e ){
+            erroDeInsercaoDeDados();  
+        }
+    }
+
+
+    @FXML
+    void alterarCliente(ActionEvent event) {
+        try{
+            String idClienteText = campoIDCliente.getText();
+            int idCliente = Integer.parseInt(idClienteText);
+
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getByID(idCliente);
+
+                if (cliente != null) {
+            
+                    String novoNome = nomeCliente.getText();
+                    String novaEmpresa = empresaCliente.getText();
+                    String novoEmail = emailCliente.getText();
+                    String novoContato = contatoCliente.getText();
+    
+                    cliente.setNomeCliente(novoNome);
+                    cliente.setEmpresa(novaEmpresa);
+                    cliente.setEmail(novoEmail);
+                    cliente.setTeleCel(novoContato);
+            
+                    clienteDAO.update(cliente);
+            
+                    atualizarTabelaClientes();
+                    atualizarListaClientes();
+                    limparCampos(event);
+                    clienteAlterado();
+
+                } else {
+                    clienteNaoEncontrado();
+            }
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+        }
+    }
+
+
+
+
+    @FXML
+    void alterarProjeto(ActionEvent event) throws ClassNotFoundException {
+        try{
+            String idProjetoText = campoIDProjeto.getText();
+            int idProjeto = Integer.parseInt(idProjetoText);
+
+            ProjetoDAO projetoDAO = new ProjetoDAO();
+            Projeto projeto = projetoDAO.getByID(idProjeto);
+
+                if (projeto != null) {
+                    String novoNome = nomeProjeto.getText();
+                    String novaDescricao = descProjeto.getText();
+                    LocalDate novaDataInicio = dInicialProjeto.getValue();
+                    LocalDate novaDataFinal = dFinalProjeto.getValue();
+                    float novoOrcamento = Float.parseFloat(orcamentoProjeto.getText());
+                    String novoStatus = statusProjeto.getText();
+                    String novoNomeCliente = clienteProjeto.getText();
+
+                    Cliente cliente = encontrarClientePorNome(novoNomeCliente);
+
+                    if (cliente != null) {
+                        int novoIdCliente = cliente.getIdCliente();
+
+                        projeto.setNomeProjeto(novoNome);
+                        projeto.setDescricao(novaDescricao);
+                        projeto.setDataInicio(novaDataInicio);
+                        projeto.setDataFinal(novaDataFinal);
+                        projeto.setOrcamento(novoOrcamento);
+                        projeto.setStatus(novoStatus);
+                        projeto.setIdCliente(novoIdCliente);
+
+                        projetoDAO.update(projeto);
+
+                        atualizarTabelaProjetos();
+                        atualizarListaClientes();
+
+                        limparCamposP(event);
+
+                        projetoAlterado();
+
+                    } 
+                } else {
+                projetoNaoEncontrado();
+            }
+        }catch(Exception e){
+            erroDeInsercaoDeDados();
+        }
+    }
+
+    @FXML
+    void deletarCliente(ActionEvent event) {
+        String idClienteText = campoIDCliente.getText();
+        int idCliente = Integer.parseInt(idClienteText);
+
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.getByID(idCliente);
+
+            if (cliente != null) {
+            clienteDAO.deleteByID(idCliente);
+            atualizarTabelaClientes();
+            atualizarListaClientes();
+            atualizarTabelaProjetos();
+            limparCampos(event);
+            clienteDeletado();
+        } else {
+        clienteNaoEncontrado();
+        }
+
+    }
+
+    @FXML
+    void deletarProjeto(ActionEvent event) throws ClassNotFoundException {
+        String idProjetoText = campoIDProjeto.getText();
+        int idProjeto = Integer.parseInt(idProjetoText);
+
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        Projeto projeto = projetoDAO.getByID(idProjeto);
+
+        if (projeto != null) {
+            projetoDAO.deleteByID(idProjeto);;
+            atualizarTabelaProjetos();
+            atualizarListaClientes();
+            atualizarTabelaClientes();
+            limparCamposP(event);
+            projetoDeletado();
+        } else {
+        projetoNaoEncontrado();
+        }
+    }
+
+    @FXML
+    void limparCampos(ActionEvent event) {
         nomeCliente.setText("");
         empresaCliente.setText("");
         emailCliente.setText("");
         contatoCliente.setText("");
+        campoIDCliente.setText("");
     }
 
     @FXML
-    void adicionarProjeto(ActionEvent event) {
-
-        String nome = nomeProjeto.getText();
-        String descricao = descProjeto.getText();
-        LocalDate dataInicial = dInicialProjeto.getValue();
-        LocalDate dataFinal = dFinalProjeto.getValue();
-        float orcamenteo = Float.parseFloat(orcamentoProjeto.getText());
-        String status = statusProjeto.getText();
-
-        String clienteSelecionado = clienteProjeto.getText();
-        Cliente cliente = encontrarClientePorNome(clienteSelecionado);
-
-        if (cliente != null) {
-            Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status, cliente.getIdCliente());
-            projetos.save(projeto);
-            
-            limparCamposProjeto();
-            atualizarTabelaProjetos();
-        } else {
-            // Cliente não encontrado, trate o erro adequadamente
-            System.out.println("Erro: Cliente não encontrado.");
-        }
-    }
-
-    private void limparCamposProjeto() {
+    void limparCamposP(ActionEvent event) {
         nomeProjeto.setText("");
         descProjeto.setText("");
         dInicialProjeto.setValue(null);
@@ -223,56 +608,72 @@ public class LayoutController {
         orcamentoProjeto.setText("");
         statusProjeto.setText("");
         clienteProjeto.setText("");
-    }
-
-    @FXML
-    void alterarCliente(ActionEvent event) {
-
-    }
-
-    @FXML
-    void alterarProjeto(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deletarCliente(ActionEvent event) {
-
-    }
-
-    @FXML
-    void deletarProjeto(ActionEvent event) {
-
-    }
-
-    @FXML
-    void limparCampos(ActionEvent event) {
-
-    }
-
-    @FXML
-    void limparCamposP(ActionEvent event) {
-
-    }
+}
 
     @FXML
     void pesquisarCliente(ActionEvent event) {
 
+        String idClienteText = campoIDCliente.getText();
+        int idCliente = Integer.parseInt(idClienteText);
+
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = clienteDAO.getByID(idCliente);
+
+            if (cliente != null) {
+
+            nomeCliente.setText(cliente.getNomeCliente());
+            empresaCliente.setText(cliente.getEmpresa());
+            emailCliente.setText(cliente.getEmail());
+            contatoCliente.setText(cliente.getTeleCel());
+
+            clienteProjeto.setText(cliente.getNomeCliente());
+            } else {
+            clienteNaoEncontrado();
+        }
     }
+
 
     @FXML
-    void pesquisarProjeto(ActionEvent event) {
+    void pesquisarProjeto(ActionEvent event) throws ClassNotFoundException {
+        String idProjetoText = campoIDProjeto.getText();
+        int idProjeto = Integer.parseInt(idProjetoText);
 
+        ProjetoDAO projetoDAO = new ProjetoDAO();
+        Projeto projeto = projetoDAO.getByID(idProjeto);
+
+            if (projeto != null) {
+            
+            nomeProjeto.setText(projeto.getNomeProjeto());
+            descProjeto.setText(projeto.getDescricao());
+            dInicialProjeto.setValue(projeto.getDataInicio());
+            dFinalProjeto.setValue(projeto.getDataFinal());
+            orcamentoProjeto.setText(String.valueOf(projeto.getOrcamento()));
+            statusProjeto.setText(projeto.getStatus());
+
+            ClienteDAO clienteDAO = new ClienteDAO();
+            Cliente cliente = clienteDAO.getByID(projeto.getIdCliente());
+            clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
+
+            if (cliente != null) {
+                clienteProjeto.setText(cliente.getIdCliente() + " - " + cliente.getNomeCliente());
+            } else {
+                clienteProjeto.setText(String.valueOf(projeto.getIdCliente()));
+            }
+        } else {
+            projetoNaoEncontrado();
+        }
+                   
     }
 
+
     private void atualizarTabelaClientes() {
-        List<Cliente> listaClientes = clientes.getAll(); // Obtenha a lista de clientes do banco de dados
+        List<Cliente> listaClientes = clientes.getAll();
         ObservableList<Cliente> observableListClientes = FXCollections.observableArrayList(listaClientes);
         tableViewCliente.setItems(observableListClientes);
     }
     
     private void atualizarTabelaProjetos() {
-        List<Projeto> listaProjetos = projetos.getAll(); // Obtenha a lista de projetos do banco de dados
+        List<Projeto> listaProjetos = projetos.getAll(); 
         ObservableList<Projeto> observableListProjetos = FXCollections.observableArrayList(listaProjetos);
         tableViewProjeto.setItems(observableListProjetos);
     }
@@ -281,27 +682,122 @@ public class LayoutController {
         List<Cliente> listaClientes = clientes.getAll();
         ObservableList<MenuItem> items = clienteProjeto.getItems();
     
-        // Limpa os itens existentes
         items.clear();
     
-        // Adiciona os clientes como itens no SplitMenuButton
-        for (Cliente cliente : listaClientes) {
-            MenuItem menuItem = new MenuItem(cliente.getNomeCliente());
-            menuItem.setOnAction(event -> clienteProjeto.setText(cliente.getNomeCliente()));
-            items.add(menuItem);
-        }
 
+        for (Cliente cliente : listaClientes) {
+        MenuItem menuItem = new MenuItem(cliente.getIdCliente() + " - " + cliente.getNomeCliente());
+        menuItem.setOnAction(event -> clienteProjeto.setText(cliente.getIdCliente() + " - " + cliente.getNomeCliente()));
+        items.add(menuItem);
+    }
         
     }
 
     private Cliente encontrarClientePorNome(String nome) {
         List<Cliente> listaClientes = clientes.getAll();
         for (Cliente cliente : listaClientes) {
-            if (cliente.getNomeCliente().equals(nome)) {
+            String nomeCompleto = cliente.getIdCliente() + " - " + cliente.getNomeCliente();
+            if (nomeCompleto.equals(nome)) {
                 return cliente;
             }
         }
-        return null; // Retornar null se o cliente não for encontrado
+        return null; 
+    }
+    
+    private void clienteDeletado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Deletar Cliente");
+        alert.setHeaderText(null);
+        alert.setContentText("Cliente deletado com sucesso!");
+        alert.showAndWait();
+    }
+    
+    private void projetoDeletado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Deletar Projeto");
+        alert.setHeaderText(null);
+        alert.setContentText("Projeto deletado com sucesso!");
+        alert.showAndWait();
+    }
+
+    private void clienteNaoEncontrado() {
+        Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Pesquisa de Cliente");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente não encontrado!");
+            alert.showAndWait();
+    }
+
+    private void projetoNaoEncontrado() {
+        Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Pesquisa de Projeto");
+            alert.setHeaderText(null);
+            alert.setContentText("Projeto não encontrado!");
+            alert.showAndWait();
+    }
+
+    private void projetoAdicionado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Adicionar Projeto");
+            alert.setHeaderText(null);
+            alert.setContentText("Projeto adicionado com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void clienteAdicionado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Adicionar Cliente");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente adicionado com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void clienteAlterado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Alterar Cliente");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente alterado com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void projetoAlterado() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Alterar Projeto");
+            alert.setHeaderText(null);
+            alert.setContentText("Projeto alterado com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void erroDeInsercaoDeDados() {
+        Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro de dados");
+            alert.setHeaderText(null);
+            alert.setContentText("Algum dado não foi inserido corretamente!");
+            alert.showAndWait();
+    }
+
+    private void etapaProjetoAlterada() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Alterar Etapa do Projeto");
+            alert.setHeaderText(null);
+            alert.setContentText("Etapa alterada com sucesso!");
+            alert.showAndWait();
+    }
+
+    private void etapaProjetoNaoEncontrada() {
+        Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setHeaderText(null);
+            alert.setContentText("Etapa não Encontrada!");
+            alert.showAndWait();
+    }
+
+    private void etapaProjetoAdicionada() {
+        Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Etapa do Projeto");
+            alert.setHeaderText(null);
+            alert.setContentText("Etapa adicionada com sucesso!");
+            alert.showAndWait();
     }
 
 }

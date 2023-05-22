@@ -111,6 +111,7 @@ public class ClienteDAO {
             pstm.setString(2, cliente.getEmpresa());
             pstm.setString(3, cliente.getEmail());
             pstm.setString(4, cliente.getTeleCel());
+            pstm.setInt(5, cliente.getIdCliente());
             pstm.execute();
             
         }catch (Exception e){
@@ -160,5 +161,51 @@ public class ClienteDAO {
             }
         }
     }
+
+    public Cliente getByID(int id) {
+        String sql = "SELECT * FROM cliente WHERE ID_cliente = ?";
+    
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+        Cliente cliente = null;
+    
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            rset = pstm.executeQuery();
+    
+            if (rset.next()) {
+                cliente = new Cliente("", "", "", "");
+                cliente.setIdCliente(rset.getInt("ID_cliente"));
+                cliente.setNomeCliente(rset.getString("nome"));
+                cliente.setEmpresa(rset.getString("empresa"));
+                cliente.setEmail(rset.getString("email"));
+                cliente.setTeleCel(rset.getString("telefone_celular"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+    
+                if (pstm != null) {
+                    pstm.close();
+                }
+    
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    
+        return cliente;
+    }
+    
 
 }

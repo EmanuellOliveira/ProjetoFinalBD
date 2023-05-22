@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,7 +104,7 @@ public class ProjetoDAO {
 
     public void update(Projeto projeto){
 
-        String sql = "UPDATE projeto SET nome = ?, descricao = ?, data_inicio = ?, data_final = ?, orcamento = ?, status = ? WHERE ID_projeto = ?";
+        String sql = "UPDATE projeto SET nome = ?, descricao = ?, data_inicio = ?, data_final = ?, orcamento = ?, status = ?, id_cliente = ? WHERE ID_projeto = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -118,8 +119,9 @@ public class ProjetoDAO {
             pstm.setDate(4, Date.valueOf(projeto.getDataFinal()));
             pstm.setFloat(5, projeto.getOrcamento());
             pstm.setString(6, projeto.getStatus());
-            pstm.setInt(7, projeto.getIdProjeto());
-
+            pstm.setInt(7, projeto.getIdCliente());
+            pstm.setInt(8, projeto.getIdProjeto());
+           
             pstm.execute();
 
         } catch (Exception e) {
@@ -169,5 +171,56 @@ public class ProjetoDAO {
             }
         }
     }
+
+    public Projeto getByID(int id) throws ClassNotFoundException {
+        String sql = "SELECT * FROM projeto WHERE ID_projeto = ?";
+    
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Projeto projeto = null;
+    
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+    
+            if (rs.next()) {
+                projeto = new Projeto();
+                projeto.setIdProjeto(rs.getInt("ID_projeto"));
+                projeto.setNomeProjeto(rs.getString("nome"));
+                projeto.setDescricao(rs.getString("descricao"));
+                projeto.setDataInicio(rs.getDate("data_inicio").toLocalDate());
+                projeto.setDataFinal(rs.getDate("data_final").toLocalDate());
+                projeto.setOrcamento(rs.getFloat("orcamento"));
+                projeto.setStatus(rs.getString("status"));
+                projeto.setIdCliente(rs.getInt("id_cliente"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+    
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+    
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    
+        return projeto;
+    }
+    
+
+
 
 }

@@ -121,4 +121,47 @@ public class EtapaDAO {
             }
         }
     }
+
+    public Etapa getByID(int id) {
+        String sql = "SELECT * FROM etapa WHERE ID_etapa = ?";
+    
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+        Etapa etapa = null;
+    
+        try {
+            conn = Conexao.createConnectionToMySQL();
+            pstm = conn.prepareStatement(sql);
+            pstm.setInt(1, id);
+            rset = pstm.executeQuery();
+    
+            if (rset.next()) {
+                etapa = new Etapa();
+                etapa.setIdEtapa(rset.getInt("ID_etapa"));
+                etapa.setNomeEtapa(rset.getString("nome"));
+                etapa.setDescricao(rset.getString("descricao"));
+                etapa.setIdEquipe(rset.getInt("ID_equipe"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    
+        return etapa;
+    }
+    
 }

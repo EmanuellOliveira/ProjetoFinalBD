@@ -8,7 +8,7 @@ public class Conexao {
     
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/projetobd";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/projetoBD";
 
     public static Connection createConnectionToMySQL() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
