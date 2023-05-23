@@ -45,9 +45,7 @@ public class ClienteDAO {
     }
 
     public List<Cliente> getAll(){
-
-
-        
+ 
         String sql = "SELECT * FROM cliente;";
 
         List<Cliente> cliente = new ArrayList<Cliente>();

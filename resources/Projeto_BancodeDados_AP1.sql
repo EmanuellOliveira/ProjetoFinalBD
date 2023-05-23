@@ -4,7 +4,7 @@ CREATE TABLE cliente(
 	ID_cliente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
     empresa VARCHAR(30) NOT NULL,
-    email VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL UNIQUE,
     telefone_celular VARCHAR(20) NOT NULL
     );
     
@@ -42,7 +42,7 @@ VALUES
 
 CREATE TABLE projeto(
 	ID_projeto INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
+    nome VARCHAR(100) NOT NULL UNIQUE,
     descricao TEXT NOT NULL,
     data_inicio DATE NOT NULL,
     data_final DATE NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE projeto(
     
 CREATE TABLE etapa_projeto(
 	ID_etapaprojeto INT PRIMARY KEY AUTO_INCREMENT,
-	ID_projeto INT NOT NULL,
+	ID_projeto INT NOT NULL UNIQUE,
     ID_etapa INT NOT NULL,
     status_etapa VARCHAR(50) NOT NULL,
     data_inicio DATE NOT NULL,

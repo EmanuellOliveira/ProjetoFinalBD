@@ -34,7 +34,7 @@ public class Etapa_projetoDAO {
         }
     }
 
-    public List<Etapa_projeto> getEtapa_projeto(){
+    public List<Etapa_projeto> getAll(){
 
         String sql = "SELECT * FROM etapa_projeto;";
 
@@ -161,7 +161,7 @@ public class Etapa_projetoDAO {
     }
 
     public void update(Etapa_projeto etapaProjeto) {
-        String sql = "UPDATE etapa_projeto SET status_etapa = ?, data_inicio = ?, data_final = ? WHERE ID_etapaprojeto = ?";
+        String sql = "UPDATE etapa_projeto SET ID_etapa = ?, status_etapa = ?, data_inicio = ?, data_final = ? WHERE ID_etapaprojeto = ?";
     
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -169,10 +169,11 @@ public class Etapa_projetoDAO {
         try {
             conn = Conexao.createConnectionToMySQL();
             pstm = conn.prepareStatement(sql);
-            pstm.setString(1, etapaProjeto.getStatusEtapa());
-            pstm.setDate(2, Date.valueOf(etapaProjeto.getDataInicio()));
-            pstm.setDate(3, Date.valueOf(etapaProjeto.getDataFinal()));
-            pstm.setInt(4, etapaProjeto.getIdEtapaProjeto());
+            pstm.setInt(1, etapaProjeto.getIdEtapa());
+            pstm.setString(2, etapaProjeto.getStatusEtapa());
+            pstm.setDate(3, Date.valueOf(etapaProjeto.getDataInicio()));
+            pstm.setDate(4, Date.valueOf(etapaProjeto.getDataFinal()));
+            pstm.setInt(5, etapaProjeto.getIdEtapaProjeto());
     
             pstm.executeUpdate();
         } catch (Exception e) {

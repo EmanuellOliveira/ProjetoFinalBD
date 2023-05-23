@@ -9,7 +9,8 @@
             "name": "App",
             "request": "launch",
             "mainClass": "view.App",
-            "projectName": "IntegracaoBDJAVA_ec970937"
+            "projectName": "IntegracaoBDJAVA_ec970937",
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -17,7 +18,7 @@
             "request": "launch",
             "mainClass": "login.LayoutLogin",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -25,7 +26,7 @@
             "request": "launch",
             "mainClass": "App",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -33,7 +34,7 @@
             "request": "launch",
             "mainClass": "aplicacao.App",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -41,14 +42,14 @@
             "request": "launch",
             "mainClass": "Main",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -56,7 +57,7 @@
             "request": "launch",
             "mainClass": "aplicacao.Main",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -64,7 +65,7 @@
             "request": "launch",
             "mainClass": "factory.Conexao",
             "projectName": "IntegracaoBDJAVA_ec970937",
-            "vmArgs": "--module-path D:/Programacao/Java/JavaLibs/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path D:/Programacao/Java/JavaProjects/IntegracaoBD/IntegracaoBDJAVA/lib/javafx-sdk-20/lib --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
