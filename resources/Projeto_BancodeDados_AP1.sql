@@ -55,7 +55,7 @@ CREATE TABLE projeto(
     
 CREATE TABLE etapa_projeto(
 	ID_etapaprojeto INT PRIMARY KEY AUTO_INCREMENT,
-	ID_projeto INT NOT NULL UNIQUE,
+	ID_projeto INT NOT NULL,
     ID_etapa INT NOT NULL,
     status_etapa VARCHAR(50) NOT NULL,
     data_inicio DATE NOT NULL,

@@ -438,30 +438,51 @@ public class LayoutController {
 
     @FXML
     void selecionarEtapaProjeto(ActionEvent event) {
+        try {
+            String nomeEtapa = splitMenuEtapa.getText();
+            String nomeProjeto = splitMenuProjeto.getText();
 
-        String nomeEtapa = splitMenuEtapa.getText();
-        String nomeProjeto = splitMenuProjeto.getText();
+            Etapa etapa = encontrarEtapaPorNome(nomeEtapa);
+            Projeto projeto = encontrarProjetoPorNome(nomeProjeto);
 
-        Etapa etapa = encontrarEtapaPorNome(nomeEtapa);
-        Projeto projeto = encontrarProjetoPorNome(nomeProjeto);
+            LocalDate novaDataInicio = dataIniEtapa.getValue();
+            LocalDate novaDataFinal = dataFiniEtapa.getValue();
+            String novoStatusEtapa = splitMenuStatusEtapa.getText();
 
-        LocalDate novaDataInicio = dataIniEtapa.getValue();
-        LocalDate novaDataFinal = dataFiniEtapa.getValue();
-        String novoStatusEtapa = splitMenuStatusEtapa.getText();
+            boolean etapaProjetoJaExiste = verificarEtapaProjetoExistente(etapa.getIdEtapa(), projeto.getIdProjeto());
+            if (etapaProjetoJaExiste) {
+                erroEtapaProjetoDuplicado();
+                return;
+            } else {
 
-        Etapa_projeto novaEtapaProjeto = new Etapa_projeto();
-        novaEtapaProjeto.setIdProjeto(projeto.getIdProjeto());
-        novaEtapaProjeto.setIdEtapa(etapa.getIdEtapa());
-        novaEtapaProjeto.setDataInicio(novaDataInicio);
-        novaEtapaProjeto.setDataFinal(novaDataFinal);
-        novaEtapaProjeto.setStatusEtapa(novoStatusEtapa);
+                Etapa_projeto novaEtapaProjeto = new Etapa_projeto();
+                novaEtapaProjeto.setIdProjeto(projeto.getIdProjeto());
+                novaEtapaProjeto.setIdEtapa(etapa.getIdEtapa());
+                novaEtapaProjeto.setDataInicio(novaDataInicio);
+                novaEtapaProjeto.setDataFinal(novaDataFinal);
+                novaEtapaProjeto.setStatusEtapa(novoStatusEtapa);
 
-        etapaProjetoDAO.save(novaEtapaProjeto);
+                etapaProjetoDAO.save(novaEtapaProjeto);
 
-        atualizaTabelaEtapas();
-        limparCamposEtapa(event);
-        etapaProjetoAdicionada();
+                atualizaTabelaEtapas();
+                limparCamposEtapa(event);
+                etapaProjetoAdicionada();
+            }
+        } catch (Exception e) {
+            erroDeInsercaoDeDados();
+        }
 
+    }
+
+    private boolean verificarEtapaProjetoExistente(int idEtapa, int idProjeto) {
+
+        List<Etapa_projeto> listaEtapaProjeto = etapaProjetoDAO.getAll();
+        for (Etapa_projeto etapaProjeto : listaEtapaProjeto) {
+            if (etapaProjeto.getIdEtapa() == idEtapa && etapaProjeto.getIdProjeto() == idProjeto) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @FXML
@@ -477,18 +498,36 @@ public class LayoutController {
                 camposVazios();
                 return;
             }
-            Cliente cliente = new Cliente(nome, empresa, email, contato);
-            clientes.save(cliente);
 
-            atualizarTabelaClientes();
-            atualizarListaClientes();
+            boolean emailJaExiste = verificarEmailExistente(email);
+            if (emailJaExiste) {
+                erroEmailDuplicado();
+                return;
+            } else {
 
-            limparCampos(event);
-            clienteAdicionado();
+                Cliente cliente = new Cliente(nome, empresa, email, contato);
+                clientes.save(cliente);
+
+                atualizarTabelaClientes();
+                atualizarListaClientes();
+
+                limparCampos(event);
+                clienteAdicionado();
+            }
 
         } catch (Exception e) {
 
         }
+    }
+
+    private boolean verificarEmailExistente(String email) {
+        List<Cliente> listaClientes = clientes.getAll();
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @FXML
@@ -510,19 +549,38 @@ public class LayoutController {
                 return;
             }
 
-            Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status,
-                    cliente.getIdCliente());
-            projetos.save(projeto);
+            boolean projetoJaExiste = verificarProjetoExistente(nome);
+            if (projetoJaExiste) {
 
-            limparCamposP(event);
-            atualizarTabelaProjetos();
-            atualizarListaClientes();
-            projetoAdicionado();
-            atualizarListaProjetos();
+                erroNomeProjetoDuplicado();
+                return;
+            } else {
+
+                Projeto projeto = new Projeto(nome, descricao, dataInicial, dataFinal, orcamenteo, status,
+                        cliente.getIdCliente());
+                projetos.save(projeto);
+
+                limparCamposP(event);
+                atualizarTabelaProjetos();
+                atualizaTabelaEtapas();
+                atualizarListaClientes();
+                projetoAdicionado();
+                atualizarListaProjetos();
+            }
 
         } catch (Exception e) {
             erroDeInsercaoDeDados();
         }
+    }
+
+    private boolean verificarProjetoExistente(String nome) {
+        List<Projeto> listaProjetos = projetos.getAll();
+        for (Projeto projeto : listaProjetos) {
+            if (projeto.getNomeProjeto().equals(nome)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @FXML
@@ -549,6 +607,7 @@ public class LayoutController {
                 clienteDAO.update(cliente);
 
                 atualizarTabelaClientes();
+                atualizaTabelaEtapas();
                 atualizarListaClientes();
                 limparCampos(event);
                 clienteAlterado();
@@ -596,6 +655,7 @@ public class LayoutController {
                     projetoDAO.update(projeto);
 
                     atualizarTabelaProjetos();
+                    atualizaTabelaEtapas();
                     atualizarListaClientes();
                     atualizarListaProjetos();
 
@@ -625,6 +685,7 @@ public class LayoutController {
             if (cliente != null) {
                 clienteDAO.deleteByID(idCliente);
                 atualizarTabelaClientes();
+                atualizaTabelaEtapas();
                 atualizarListaClientes();
                 atualizarTabelaProjetos();
                 limparCampos(event);
@@ -653,6 +714,7 @@ public class LayoutController {
                 projetoDAO.deleteByID(idProjeto);
                 ;
                 atualizarTabelaProjetos();
+                atualizaTabelaEtapas();
                 atualizarListaClientes();
                 atualizarTabelaClientes();
                 atualizarListaProjetos();
@@ -912,6 +974,30 @@ public class LayoutController {
         alert.setTitle("Erro");
         alert.setHeaderText(null);
         alert.setContentText("Não pode haver campos vazios!");
+        alert.showAndWait();
+    }
+
+    private void erroEmailDuplicado() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erro de duplicação!");
+        alert.setHeaderText(null);
+        alert.setContentText("Não pode haver clientes com o mesmo e-mail!");
+        alert.showAndWait();
+    }
+
+    private void erroNomeProjetoDuplicado() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erro de duplicação!");
+        alert.setHeaderText(null);
+        alert.setContentText("Não pode haver projetos com o mesmo nome!");
+        alert.showAndWait();
+    }
+
+    private void erroEtapaProjetoDuplicado() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Erro de duplicação!");
+        alert.setHeaderText(null);
+        alert.setContentText("Não pode haver Projetos e Etapas duplicadas!");
         alert.showAndWait();
     }
 }
